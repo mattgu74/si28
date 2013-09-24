@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <script src="hide-address-bar.js"></script>
+    <script src="http://cdn.peerjs.com/0/peer.js"></script>
+    <script>
+        function min(a,b) {if(a<b) {return a;} else {return b;}}
+        function max(a,b) {if(a>b) {return a;} else {return b;}}
+        function abs(a) {if(a<0) {return -a;} else {return a;}}
+
+        var client = new Peer({host: '89.88.36.152', port: 9000});
+
+        function client_handle_conn(conn) {
+          conn.on('data', function(data){
+            client_receive(data);
+          });
+
+          conn.on('open', function() {
+            console.log("There is a new connection (between me(client) and " + conn.peer + " ) !")
+            if(clients2.indexOf(conn.peer) == -1) { clients2.push(conn.peer); }
+            clients_conn2[conn.peer] = conn;
+          });
+
+          conn.on('close', function() {
+            console.log("Connection closed ! " + conn.peer);
+            new_conn = client.connect(conn.peer);
+            clients2.pop(conn.peer);
+            clients_conn2[conn.peer] = null;
+          });
+
+          conn.on('error', function() {
+            console.log("Connection closed (error) ! " + conn.peer);
+            new_conn = client.connect(conn.peer);
+            clients2.pop(conn.peer);
+            clients_conn2[conn.peer] = null;
+          });
+
+        }
+
+        client.on('connection', function(conn) {
+          client_handle_conn(conn);
+        });
+
+        var host = new Peer('MASTER', {host: '89.88.36.152', port: 9000});
+
+        var conn_master = null; // Connection utilisé par le client pour parler au MASTER
+
+        var clients = [];  // les clients du master
+        var clients2 = []; // les clients P2P du client
+        var clients_conn = {}; // MASTER ONE
+        var clients_conn2 = {}; // Client one
+
+        var right = null;
+        var left = null;
+        var top_ = null;
+        var bottom = null;
+
+        // Lorsque le client reçoit des données
+        function client_receive(data) {
+          switch(data['action']) {
+            case "left":
+              left = data['id'];
+              if(!clients_conn2[left]) {
+                console.log("Don't know " + left + " etablish connection...");
+                client_handle_conn(client.connect(left));
+              }
+              break;
+            case "right":
+              right = data['id'];
+              if(!clients_conn2[right] && right != left) {
+                console.log("Don't know " + right + " etablish connection...");
+                client_handle_conn(client.connect(right));
+              }
+              break;
+            case "top":
+              top_ = data['id'];
+              /*if(!clients_conn2[top]) {
+                console.log("Don't know " + top + " etablish connection...");
+                client_handle_conn(client.connect(top));
+              }*/
+              break;
+            case "bottom":
+              bottom = data['id'];
+              /*if(!clients_conn2[right]) {
+                console.log("Don't know " + bottom + " etablish connection...");
+                client_handle_conn(client.connect(bottom));
+              }*/
+              break;
+            case "object":
+              receive_object(data);
+              break;
+
+          }          
+          console.log("I (client) receive data... " + data);
+          console.log(data);
+        }
+
+        function client_code() {
+          // Announce myself to master
+          conn_master = client.connect('MASTER');
+          conn_master.on('data', function(data){
+            client_receive(data);
+          });
+          conn_master.on('open', function(){
+            console.log("Connection with MASTER is etablished !");
+          });
+
+        }
+
+        // Broadcast to each clients, it's neighboors        
+        function master_broadcast() {
+          for (var i=0;i<clients.length;i++) { 
+            clients_conn[clients[i]].send({"action": "left", "id": clients[(i-1+clients.length)%clients.length]});
+            clients_conn[clients[i]].send({"action": "right", "id": clients[(i+1)%clients.length]});
+            clients_conn[clients[i]].send({"action": "bottom", "id": clients[(i-1+clients.length)%clients.length]});
+            clients_conn[clients[i]].send({"action": "top", "id": clients[(i+1)%clients.length]});
+          }        
+        }
+
+        function master_code() {
+          host.on('connection', function(conn) {
+            conn.on('data', function(data){
+              console.log("I (master) receive data from " + conn.peer);
+              console.log(data);
+
+              switch(data["action"]) {
+
+                default:
+                  console.log("Don't understand the action: "+data["action"]);
+              }
+              
+            });
+
+            conn.on('open', function() {
+              console.log("There is a new client !")
+              clients.push(conn.peer);
+              clients_conn[conn.peer] = conn;
+              master_broadcast();
+            });
+
+            conn.on('close', function() {
+              console.log("Connection closed ! " + conn.peer);
+              clients.pop(conn.peer);
+              clients_conn[conn.peer] = null;
+              //master_broadcast();
+            });
+
+            conn.on('error', function() {
+              console.log("Connection closed (error) ! " + conn.peer);
+              clients.pop(conn.peer);
+              clients_conn[conn.peer] = null;
+              //master_broadcast();
+            });
+
+          }); // END On connection 
+        }
+
+        host.on('error', function(err) {
+            // S'il y'a une erreur c'est qu'il existe probablement déjà un master
+            console.log("Il existe déjà un master, je dois m'authentifier auprès de lui");
+            client_code();
+        });
+
+        host.on('open', function(id) {
+            console.log("I'am the MASTER");
+            master_code();
+            // Maintenant qu'on a lancé un master, je dois déclarer mon propre client auprès de lui
+            client_code();
+        });
+    </script>
+    <style>
+      body {
+        background-color: #000000;
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.1.min.js"></script>
+    <script defer="defer">
+      var lastDist = 0;
+      var startScale = 1;
+      var activeShape = null;
+
+      function getDistance(p1, p2) {
+        return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
+      }
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: screen.width,
+        height: screen.height,
+        x: 286,
+        y: 100,
+        offset: [289, 100]
+      });
+
+      var layer = new Kinetic.Layer();
+
+      var obj1 = new Kinetic.RegularPolygon({
+        x: 190,
+        y: stage.getHeight() / 3,
+        sides: 3,
+        radius: 80,
+        fill: 'green',
+        stroke: 'black',
+        strokeWidth: 4,
+        draggable: true,
+        name: 'triangle',
+        last_x: 190,
+        last_y: stage.getHeight() / 3
+      });
+      var obj2 = new Kinetic.Circle({
+        x: 380,
+        y: stage.getHeight() / 3,
+        radius: 70,
+        fill: 'red',
+        stroke: 'black',
+        strokeWidth: 4,
+        draggable: true,
+        name: 'circle',
+        last_x: 380,
+        last_y: stage.getHeight() / 3
+      });
+
+      layer.add(obj1);
+      layer.add(obj2);
+      stage.add(layer);
+
+      function send_object(obj, conn) {
+        if(clients_conn2[conn] && clients_conn2[conn].open) {
+          console.log("send to " + conn); 
+          clients_conn2[conn].send({"action": 'object', 
+                     'forme': obj.getAttr('name'), 
+                     'x': obj.getAttr('x')/stage.getWidth(), 
+                     'y': obj.getAttr('y')/stage.getHeight(), 
+                     'last_x': obj.getAttr('last_x')/stage.getWidth(), 
+                     'last_y': obj.getAttr('last_y')/stage.getHeight()});
+          obj.destroy();
+        }
+      }
+
+      function receive_object(data) {
+        console.log("Receive object");
+        if(data['forme'] == 'triangle') {
+          obj = new Kinetic.RegularPolygon({
+              x: data['x']*stage.getWidth(),
+              y: data['y']*stage.getHeight(),
+              sides: 3,
+              radius: 80,
+              fill: 'green',
+              stroke: 'black',
+              strokeWidth: 4,
+              draggable: true,
+              name: 'triangle',
+              last_x: data['last_x']*stage.getWidth(),
+              last_y: data['last_y']*stage.getHeight()
+            });
+        } else {
+          obj = new Kinetic.Circle({
+            x: data['x']*stage.getWidth(),
+            y: data['y']*stage.getHeight(),
+            radius: 70,
+            fill: 'red',
+            stroke: 'black',
+            strokeWidth: 4,
+            draggable: true,
+            name: 'circle',
+            last_x: data['last_x']*stage.getWidth(),
+            last_y: data['last_y']*stage.getHeight()
+          });
+        }
+        layer.add(obj);
+      }
+
+      var anim = new Kinetic.Animation(function(frame) {
+        for (var i=0;i<layer.children.length;i++) {
+          obj = layer.children[i];
+          var dist_x = max(min(obj.getAttr('x') - obj.getAttr('last_x'), 10), -10);
+          var dist_y = max(min(obj.getAttr('y') - obj.getAttr('last_y'), 10), -10);
+          obj.setAttr('last_x', obj.getAttr('x'));
+          obj.setAttr('last_y', obj.getAttr('y'));
+          if(abs(dist_x) > 1 || abs(dist_y) > 1) {
+            obj.move(dist_x, dist_y);
+          }
+
+          if(obj.getAttr('x') > stage.getWidth()) {
+            // On traverse l'écran a droite
+            obj.setAttr('last_x', obj.getAttr('x') - stage.getWidth());
+            obj.move(dist_x - stage.getWidth(), dist_y);
+            if(right) {
+              send_object(obj, right);
+              i-=1;
+            }
+          } else if(obj.getAttr('x') < 0) {
+            // on traverse l'écran a gauche
+            obj.setAttr('last_x', obj.getAttr('x') + stage.getWidth());
+            obj.move(dist_x + stage.getWidth(), dist_y);
+            if(left) {
+              send_object(obj, left);
+              i-=1;
+            }
+          } else if(obj.getAttr('y') > stage.getHeight()) {
+            // on traverse en haut
+            obj.setAttr('last_y', obj.getAttr('y') - stage.getHeight());
+            obj.move(dist_x, dist_y - stage.getHeight());
+            if(top_) {
+              send_object(obj, top_);
+              i-=1;
+            }
+          } else if(obj.getAttr('y') < 0) {
+            // on traverse en bas
+            obj.setAttr('last_y', obj.getAttr('y') + stage.getHeight());
+            obj.move(dist_x, dist_y + stage.getHeight());
+            if(bottom) {
+              send_object(obj, bottom);
+              i-=1;
+            }
+          }
+
+        }
+      }, layer);
+
+      anim.start();
+
+    </script>
+  </body>
+</html>
