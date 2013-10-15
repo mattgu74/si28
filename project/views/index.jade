@@ -3,9 +3,9 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  script.
-    var socket = io.connect('http://localhost');
-    socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
-    });
+  button#Black(
+    type='submit'
+    style='width: 25px; height: 25px; background-color: black;'
+    onclick="javascript:send_msg();"
+  )
+  script(src='/javascripts/network.js')
