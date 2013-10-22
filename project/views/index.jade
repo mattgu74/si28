@@ -1,11 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  button#Black(
-    type='submit'
-    style='width: 25px; height: 25px; background-color: black;'
-    onclick="javascript:send_msg();"
-  )
+  div#container 
+  script(src='/javascripts/kinetic-v4.7.1.min.js')
   script(src='/javascripts/network.js')
+  script(src='/javascripts/animation.js')
