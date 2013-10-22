@@ -3,9 +3,18 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  #container
   script.
     var socket = io.connect('http://localhost');
     socket.on('news', function (data) {
       console.log(data);
       socket.emit('my other event', { my: 'data' });
     });
+  script(src='http://code.jquery.com/jquery-1.10.2.min.js');
+  script(src='http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.1.min.js');
+  script(src='javascripts/square.js');
+  script(src='javascripts/polygon.js');
+  script(src='javascripts/triangle.js');
+  script(src='javascripts/circle.js');
+  script(src='javascripts/animation.js');
+
