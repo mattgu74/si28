@@ -1,10 +1,81 @@
+function mod(a, b) {
+    console.log(a, b);
+    if (a>=b) {
+        return a - b;
+    }
+    if (a<0) {
+        return b - 1;
+    }
+    return a;
+}
+
 
 function run(io) {
+    var clients = new Array();
+
+    function get_right(clients, socket) {
+        index = clients.indexOf(socket) + 1;
+        index = mod(index, clients.length);
+        console.log(index);
+        return clients[index];
+    }
+    
+    function get_left(clients, socket) {
+        index = clients.indexOf(socket) - 1;
+        index = mod(index, clients.length);
+        console.log(index);
+        return clients[index];
+    }
+
     io.sockets.on('connection', function (socket) {
-          socket.emit('news', { hello: 'world' });
-          socket.on('my other event', function (data) {
-            console.log(data);
-          });
+      socket.on('set nickname', function (name) {
+        socket.set('nickname', name, function () {
+          socket.emit('ready');
+          clients.push(socket);
+        });
+      });
+      
+      socket.on('disconnect', function () {
+        console.log('User disconnect ! ');
+        clients.splice(clients.indexOf(socket), 1);
+      });
+
+      socket.on('msg', function (data) {
+        socket.get('nickname', function (err, name) {
+          console.log('Chat message by ', name);
+          console.log(data);
+          socket.broadcast.emit('msg', {name: name, msg: data});
+        });
+      });
+      
+      socket.on('obj_right', function (data) {
+        socket.get('nickname', function (err, name) {
+          console.log('Obj_right by ', name);
+          get_right(clients, socket).emit('obj', data);
+        });
+      });
+      
+      socket.on('obj_left', function (data) {
+        socket.get('nickname', function (err, name) {
+          console.log('Obj_left by ', name);
+          get_left(clients, socket).emit('obj', data);
+        });
+      });
+      
+      socket.on('obj_top', function (data) {
+        socket.get('nickname', function (err, name) {
+          console.log('Obj_top by ', name);
+          get_right(clients, socket).emit('obj', data);
+        });
+      });
+      
+      socket.on('obj_bottom', function (data) {
+        socket.get('nickname', function (err, name) {
+          console.log('Obj_bottom by ', name);
+          get_left(clients, socket).emit('obj', data);
+        });
+      });
+      
     });
 }
 
