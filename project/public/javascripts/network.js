@@ -19,31 +19,29 @@ function send_msg() {
 }
 
 function send_object(obj, pos) {
-      socket.emit('obj_'+pos, {
-                 'action': 'object', 
-                 'shape': obj.getAttr('shape'),
-                 'color': obj.getAttr('color'), 
-                 'x': obj.getAttr('x')/stage.getWidth(), 
-                 'y': obj.getAttr('y')/stage.getHeight(), 
-                 'last_x': obj.getAttr('last_x')/stage.getWidth(), 
-                 'last_y': obj.getAttr('last_y')/stage.getHeight()});
-      obj.destroy();
+    data = {
+             'action': 'object', 
+             'shape': obj.getAttr('shape'),
+             'color': obj.getAttr('color'), 
+             'x': obj.getAttr('x')/stage.getWidth(), 
+             'y': obj.getAttr('y')/stage.getHeight(), 
+             'last_x': obj.getAttr('last_x')/stage.getWidth(), 
+             'last_y': obj.getAttr('last_y')/stage.getHeight()};
+    socket.emit('obj_'+pos, data);
+    obj.destroy();
 }
 
 
 function receive_object(data) {
-    console.log("Receive object");
-    if(data['shape'] == 'square') {
-      console.log(data);
-      obj = new Square({
+    if(data['action'] == 'object') {
+      obj = new Shape({
           x: data['x']*stage.getWidth(),
           y: data['y']*stage.getHeight(),
           color: data['color'],
           last_x: data['last_x']*stage.getWidth(),
-          last_y: data['last_y']*stage.getHeight()
+          last_y: data['last_y']*stage.getHeight(),
+          shape: data['shape']
         });
       obj.init();
-    } else {
-      console.log(data['shape'] + " unknown !");
     }
   }

@@ -2,11 +2,6 @@ var Square = function(config) {
   var that = this; 
 
   this.config = $.extend({
-    x:200,
-    y:200,
-    last_x:200,
-    last_y:200,
-    color:"#F00",
     size: 40,
     shape: "square"
   }, config);
@@ -24,16 +19,16 @@ var Square = function(config) {
     });
 
     var square = new Kinetic.Rect({
-      x: 0,
-      y: 0,
+      x: -1*(that.config.size)/2,
+      y: -1*(that.config.size)/2,
       width: that.config.size,
       height: that.config.size,
       fill: that.config.color
     });
 
     var squareBorder = new Kinetic.Rect({
-      x: - 7.5,
-      y: - 7.5,
+      x: -1*(that.config.size+15)/2,
+      y: -1*(that.config.size+15)/2,
       width: that.config.size + 15,
       height: that.config.size + 15,
       fill: 'transparent',
@@ -42,8 +37,8 @@ var Square = function(config) {
     });
 
     var squareOuterBorder = new Kinetic.Rect({
-      x: - 15,
-      y: - 15,
+      x: -1*(that.config.size+30)/2,
+      y: -1*(that.config.size+30)/2,
       width: that.config.size + 30,
       height: that.config.size + 30,
       fill: 'black',

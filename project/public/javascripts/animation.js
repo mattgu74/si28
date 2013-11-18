@@ -29,14 +29,17 @@ function abs(a) {if(a<0) {return -a;} else {return a;}}
   var anim = new Kinetic.Animation(function(frame) {
     for (var i=0;i<layer.children.length;i++) {   
       obj = layer.children[i];
-      
+
       var dist_x = max(min(obj.getAttr('x') - obj.getAttr('last_x'), 10), -10);
       var dist_y = max(min(obj.getAttr('y') - obj.getAttr('last_y'), 10), -10);
       obj.setAttr('last_x', obj.getAttr('x'));
       obj.setAttr('last_y', obj.getAttr('y'));
-      if(abs(dist_x) > 1 || abs(dist_y) > 1) {
-        obj.move(dist_x, dist_y);
+      
+      if(obj.isDragging()) {
+        continue;
       }
+      
+      obj.move(dist_x, dist_y);
 
       if(obj.getAttr('x') > stage.getWidth()) {
         // On traverse l'écran a droite

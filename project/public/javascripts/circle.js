@@ -2,27 +2,31 @@ var Circle = function(config) {
   var that = this; 
 
   this.config = $.extend({
-    x:200,
-    y:200,
-    color:"#F00",
-    radius: 23,
-    shape: "circle"
+    radius: 23
   }, config);
 
   this.createShape = function() {
 
-    var circleGroup = new Kinetic.Group();
-
-    var circle = new Kinetic.Circle({
+    var circleGroup = new Kinetic.Group({
       x: that.config.x,
       y: that.config.y,
+      last_x: that.config.last_x,
+      last_y: that.config.last_y,
+      color: that.config.color,
+      shape: "circle",
+      draggable: true
+    });
+
+    var circle = new Kinetic.Circle({
+      x: 0,
+      y: 0,
       radius:this.config.radius,
       fill: that.config.color
     });
 
     var circleBorder = new Kinetic.Circle({
-      x: that.config.x,
-      y: that.config.y,
+      x: 0,
+      y: 0,
       radius:this.config.radius + 9,
       fill: 'transparent',
       stroke: that.config.color,
@@ -30,8 +34,8 @@ var Circle = function(config) {
     });
 
     var circleOuterBorder = new Kinetic.Circle({
-      x: that.config.x,
-      y: that.config.y,
+      x: 0,
+      y: 0,
       radius:this.config.radius + 17,
       fill: 'black',
       stroke: that.config.color,
@@ -48,6 +52,10 @@ var Circle = function(config) {
 
     layer.add(circleGroup);
 
+  }
+
+  this.destroy = function() {
+    squareGroup.destroy();
   }
 
   this.init = function() {

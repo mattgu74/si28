@@ -2,28 +2,33 @@ var Triangle = function(config) {
   var that = this; 
 
   this.config = $.extend({
-    x:200,
-    y:200,
-    color:"#F00",
     radius: 20,
     shape: "triangle"
   }, config);
 
   this.createShape = function() {
 
-    var triangleGroup = new Kinetic.Group();
-
-    var triangle = new Kinetic.RegularPolygon({
+    var triangleGroup = new Kinetic.Group({
       x: that.config.x,
       y: that.config.y,
+      last_x: that.config.last_x,
+      last_y: that.config.last_y,
+      color: that.config.color,
+      shape: "triangle",
+      draggable: true
+    });
+
+    var triangle = new Kinetic.RegularPolygon({
+      x: 0,
+      y: 0,
       sides:3,
       radius:this.config.radius,
       fill: that.config.color
     });
 
     var triangleBorder = new Kinetic.RegularPolygon({
-      x: that.config.x,
-      y: that.config.y,
+      x: 0,
+      y: 0,
       sides:3,
       radius:this.config.radius + 14,
       fill: 'transparent',
@@ -32,8 +37,8 @@ var Triangle = function(config) {
     });
 
     var triangleOuterBorder = new Kinetic.RegularPolygon({
-      x: that.config.x,
-      y: that.config.y,
+      x: 0,
+      y: 0,
       sides:3,
       radius:this.config.radius + 28,
       fill: 'black',
@@ -51,6 +56,10 @@ var Triangle = function(config) {
 
     layer.add(triangleGroup);
 
+  }
+
+  this.destroy = function() {
+    squareGroup.destroy();
   }
 
   this.init = function() {

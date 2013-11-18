@@ -2,30 +2,32 @@ var Polygon = function(config) {
   var that = this; 
 
   this.config = $.extend({
-    x:200,
-    y:200,
-    last_x:200,
-    last_y:200,
-    color:"#F00",
-    radius: 21,
-    shape: "polygon"
+    radius: 21
   }, config);
 
   this.createShape = function() {
 
-    var polygonGroup = new Kinetic.Group();
-
-    var polygon = new Kinetic.RegularPolygon({
+    var polygonGroup = new Kinetic.Group({
       x: that.config.x,
       y: that.config.y,
+      last_x: that.config.last_x,
+      last_y: that.config.last_y,
+      color: that.config.color,
+      shape: "polygon",
+      draggable: true
+    });
+
+    var polygon = new Kinetic.RegularPolygon({
+      x: 0,
+      y: 0,
       sides:6,
       radius:this.config.radius,
       fill: that.config.color
     });
 
     var polygonBorder = new Kinetic.RegularPolygon({
-      x: that.config.x,
-      y: that.config.y,
+      x: 0,
+      y: 0,
       sides:6,
       radius:this.config.radius + 11,
       fill: 'transparent',
@@ -35,8 +37,8 @@ var Polygon = function(config) {
 
     var polygonOuterBorder = new Kinetic.RegularPolygon({
    
-      x: that.config.x,
-      y: that.config.y,
+      x: 0,
+      y: 0,
       sides:6,
       radius:this.config.radius + 20,
       fill: 'black',
