@@ -21,7 +21,8 @@ function send_msg() {
 function send_object(obj, pos) {
       socket.emit('obj_'+pos, {
                  'action': 'object', 
-                 'forme': obj.getAttr('name'), 
+                 'shape': obj.getAttr('shape'),
+                 'color': obj.getAttr('color'), 
                  'x': obj.getAttr('x')/stage.getWidth(), 
                  'y': obj.getAttr('y')/stage.getHeight(), 
                  'last_x': obj.getAttr('last_x')/stage.getWidth(), 
@@ -32,33 +33,17 @@ function send_object(obj, pos) {
 
 function receive_object(data) {
     console.log("Receive object");
-    if(data['forme'] == 'triangle') {
-      obj = new Kinetic.RegularPolygon({
+    if(data['shape'] == 'square') {
+      console.log(data);
+      obj = new Square({
           x: data['x']*stage.getWidth(),
           y: data['y']*stage.getHeight(),
-          sides: 3,
-          radius: 80,
-          fill: 'green',
-          stroke: 'black',
-          strokeWidth: 4,
-          draggable: true,
-          name: 'triangle',
+          color: data['color'],
           last_x: data['last_x']*stage.getWidth(),
           last_y: data['last_y']*stage.getHeight()
         });
+      obj.init();
     } else {
-      obj = new Kinetic.Circle({
-        x: data['x']*stage.getWidth(),
-        y: data['y']*stage.getHeight(),
-        radius: 70,
-        fill: 'red',
-        stroke: 'black',
-        strokeWidth: 4,
-        draggable: true,
-        name: 'circle',
-        last_x: data['last_x']*stage.getWidth(),
-        last_y: data['last_y']*stage.getHeight()
-      });
+      console.log(data['shape'] + " unknown !");
     }
-    layer.add(obj);
   }

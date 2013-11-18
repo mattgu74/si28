@@ -5,7 +5,8 @@ var Circle = function(config) {
     x:200,
     y:200,
     color:"#F00",
-    radius: 23
+    radius: 23,
+    shape: "circle"
   }, config);
 
   this.createShape = function() {

@@ -65,14 +65,16 @@ function run(io) {
       socket.on('obj_top', function (data) {
         socket.get('nickname', function (err, name) {
           console.log('Obj_top by ', name);
-          get_right(clients, socket).emit('obj', data);
+          //get_right(clients, socket).emit('obj', data);
+          socket.emit('obj', data);
         });
       });
       
       socket.on('obj_bottom', function (data) {
         socket.get('nickname', function (err, name) {
           console.log('Obj_bottom by ', name);
-          get_left(clients, socket).emit('obj', data);
+          //get_left(clients, socket).emit('obj', data);
+          socket.emit('obj', data);
         });
       });
       

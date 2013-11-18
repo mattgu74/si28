@@ -4,8 +4,11 @@ var Polygon = function(config) {
   this.config = $.extend({
     x:200,
     y:200,
+    last_x:200,
+    last_y:200,
     color:"#F00",
-    radius: 21
+    radius: 21,
+    shape: "polygon"
   }, config);
 
   this.createShape = function() {
@@ -31,6 +34,7 @@ var Polygon = function(config) {
     });
 
     var polygonOuterBorder = new Kinetic.RegularPolygon({
+   
       x: that.config.x,
       y: that.config.y,
       sides:6,
@@ -52,6 +56,10 @@ var Polygon = function(config) {
 
   }
 
+  this.destroy = function() {
+    squareGroup.destroy();
+  }
+  
   this.init = function() {
     this.createShape();
   }

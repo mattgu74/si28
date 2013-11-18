@@ -24,40 +24,12 @@ function abs(a) {if(a<0) {return -a;} else {return a;}}
   };
 
   var layer = new Kinetic.Layer();
-
-  var obj1 = new Kinetic.RegularPolygon({
-    x: 190,
-    y: stage.getHeight() / 3,
-    sides: 3,
-    radius: 80,
-    fill: 'green',
-    stroke: 'black',
-    strokeWidth: 4,
-    draggable: true,
-    name: 'triangle',
-    last_x: 190,
-    last_y: stage.getHeight() / 3
-  });
-  var obj2 = new Kinetic.Circle({
-    x: 380,
-    y: stage.getHeight() / 3,
-    radius: 70,
-    fill: 'red',
-    stroke: 'black',
-    strokeWidth: 4,
-    draggable: true,
-    name: 'circle',
-    last_x: 380,
-    last_y: stage.getHeight() / 3
-  });
-
-  layer.add(obj1);
-  layer.add(obj2);
   stage.add(layer);
 
   var anim = new Kinetic.Animation(function(frame) {
-    for (var i=0;i<layer.children.length;i++) {
+    for (var i=0;i<layer.children.length;i++) {   
       obj = layer.children[i];
+      
       var dist_x = max(min(obj.getAttr('x') - obj.getAttr('last_x'), 10), -10);
       var dist_y = max(min(obj.getAttr('y') - obj.getAttr('last_y'), 10), -10);
       obj.setAttr('last_x', obj.getAttr('x'));

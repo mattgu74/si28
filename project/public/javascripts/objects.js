@@ -1,22 +1,14 @@
-var stage = new Kinetic.Stage({
-  container: 'container',
-  width: window.innerWidth - 300,
-  height: window.innerHeight,
-  x: 286,
-  y: 100,
-  offset: [289, 100]
-});
-
-var layer = new Kinetic.Layer();
-
 var squareConfig = {
   x:100,
   y:200,
+  last_x: 100,
+  last_y: 200,
   color:"#FFE603"
 }
 var square = new Square(squareConfig);
 square.init();
 
+/*
 var polygonConfig = {
   x:250,
   y:225,
@@ -40,6 +32,4 @@ var circleConfig = {
 }
 var circle = new Circle(circleConfig);
 circle.init();
-
-
-stage.add(layer);
+*/

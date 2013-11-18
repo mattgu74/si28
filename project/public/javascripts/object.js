@@ -1,39 +1,28 @@
-var Square = function(config) {
+var Object = function(config) {
   var that = this; 
 
   this.config = $.extend({
     x:200,
     y:200,
-    last_x:200,
-    last_y:200,
     color:"#F00",
-    size: 40,
-    shape: "square"
+    size: 40
   }, config);
 
   this.createShape = function() {
 
-    var squareGroup = new Kinetic.Group({
-      x: that.config.x,
-      y: that.config.y,
-      last_x: that.config.last_x,
-      last_y: that.config.last_y,
-      color: that.config.color,
-      shape: that.config.shape,
-      draggable: true
-    });
+    var squareGroup = new Kinetic.Group();
 
     var square = new Kinetic.Rect({
-      x: 0,
-      y: 0,
+      x: that.config.x,
+      y: that.config.y,
       width: that.config.size,
       height: that.config.size,
       fill: that.config.color
     });
 
     var squareBorder = new Kinetic.Rect({
-      x: - 7.5,
-      y: - 7.5,
+      x: that.config.x - 7.5,
+      y: that.config.y - 7.5,
       width: that.config.size + 15,
       height: that.config.size + 15,
       fill: 'transparent',
@@ -42,8 +31,8 @@ var Square = function(config) {
     });
 
     var squareOuterBorder = new Kinetic.Rect({
-      x: - 15,
-      y: - 15,
+      x: that.config.x - 15,
+      y: that.config.y - 15,
       width: that.config.size + 30,
       height: that.config.size + 30,
       fill: 'black',
@@ -61,10 +50,6 @@ var Square = function(config) {
 
     layer.add(squareGroup);
 
-  }
-
-  this.destroy = function() {
-    squareGroup.destroy();
   }
 
   this.init = function() {

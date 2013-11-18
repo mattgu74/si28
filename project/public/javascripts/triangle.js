@@ -5,7 +5,8 @@ var Triangle = function(config) {
     x:200,
     y:200,
     color:"#F00",
-    radius: 20
+    radius: 20,
+    shape: "triangle"
   }, config);
 
   this.createShape = function() {
