@@ -52,6 +52,21 @@ var Circle = function(config) {
 
     layer.add(circleGroup);
 
+    this.animateElement(circle, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(circleBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(circleOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  }
+
+  this.animateElement = function(elem, speed, effect) {
+    elem.setScale(0);
+    var tween = new Kinetic.Tween({
+      node: elem, 
+      duration: speed,
+      scaleX: 1,
+      scaleY: 1,
+      easing: effect
+    });
+    tween.play();
   }
 
   this.destroy = function() {

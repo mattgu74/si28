@@ -36,7 +36,6 @@ var Polygon = function(config) {
     });
 
     var polygonOuterBorder = new Kinetic.RegularPolygon({
-   
       x: 0,
       y: 0,
       sides:6,
@@ -56,10 +55,26 @@ var Polygon = function(config) {
 
     layer.add(polygonGroup);
 
+    this.animateElement(polygon, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(polygonBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(polygonOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  }
+
+  this.animateElement = function(elem, speed, effect) {
+    elem.setScale(0);
+    var tween = new Kinetic.Tween({
+      node: elem, 
+      duration: speed,
+      scaleX: 1,
+      scaleY: 1,
+      easing: effect
+    });
+    tween.play();
+
   }
 
   this.destroy = function() {
-    squareGroup.destroy();
+    polygonGroup.destroy();
   }
   
   this.init = function() {

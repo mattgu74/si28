@@ -56,6 +56,25 @@ var Square = function(config) {
 
     layer.add(squareGroup);
 
+    this.animateElement(square, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(squareBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(squareOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  }
+
+  this.animateElement = function(elem, speed, effect) {
+    elem.setScale(0);
+    console.log(elem.attrs.width / 20);
+    var tween = new Kinetic.Tween({
+      node: elem, 
+      duration: speed,
+      // x: (elem.attrs.width / 2),
+      // y:elem.attrs.height,
+      scaleX: 1,
+      scaleY: 1,
+      easing: effect
+    });
+    tween.play();
+
   }
 
   this.destroy = function() {
