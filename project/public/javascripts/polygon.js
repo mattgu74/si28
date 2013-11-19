@@ -43,10 +43,6 @@ var Polygon = function(config) {
       fill: 'black',
       stroke: that.config.color,
       strokeWidth: 5
-      // shadowColor: 'white',
-      // shadowBlur: that.config.size - 10,
-      // shadowOffset: 0,
-      // shadowOpacity: 0.8
     });
 
     polygonGroup.add(polygonOuterBorder);
@@ -55,9 +51,14 @@ var Polygon = function(config) {
 
     layer.add(polygonGroup);
 
-    this.animateElement(polygon, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(polygonBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(polygonOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+    this.createAnimation(polygon, polygonBorder, polygonOuterBorder);
+
+  }
+
+  this.createAnimation = function(object, objectBorder, objectOuterBorder) {
+    this.animateElement(object, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(objectBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
   }
 
   this.animateElement = function(elem, speed, effect) {

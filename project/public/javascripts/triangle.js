@@ -44,10 +44,6 @@ var Triangle = function(config) {
       fill: 'black',
       stroke: that.config.color,
       strokeWidth: 5
-      // shadowColor: 'white',
-      // shadowBlur: that.config.size - 10,
-      // shadowOffset: 0,
-      // shadowOpacity: 0.8
     });
 
     triangleGroup.add(triangleOuterBorder);
@@ -56,9 +52,14 @@ var Triangle = function(config) {
 
     layer.add(triangleGroup);
 
-    this.animateElement(triangle, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(triangleBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(triangleOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+    this.createAnimation(triangle, triangleBorder, triangleOuterBorder);
+
+  }
+
+  this.createAnimation = function(object, objectBorder, objectOuterBorder) {
+    this.animateElement(object, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(objectBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
   }
 
   this.animateElement = function(elem, speed, effect) {
