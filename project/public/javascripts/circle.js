@@ -1,17 +1,12 @@
-var Circle = function(config) {
+var Circle = function(config, shape) {
   var that = this;
-  var circleGroup = null;
-  var circle = null;
-  var circleBorder = null;
-  var circleOuterBorder = null;
 
   this.config = $.extend({
     radius: 23
   }, config);
-
+  
   this.createShape = function() {
-
-    circleGroup = new Kinetic.Group({
+    shape.objectGroup = new Kinetic.Group({
       shape: that,
       x: that.config.x,
       y: that.config.y,
@@ -22,14 +17,14 @@ var Circle = function(config) {
       draggable: true
     });
 
-    circle = new Kinetic.Circle({
+    shape.object = new Kinetic.Circle({
       x: 0,
       y: 0,
       radius:this.config.radius,
       fill: that.config.color
     });
 
-    circleBorder = new Kinetic.Circle({
+    shape.objectBorder = new Kinetic.Circle({
       x: 0,
       y: 0,
       radius:this.config.radius + 9,
@@ -38,7 +33,7 @@ var Circle = function(config) {
       strokeWidth: 1
     });
 
-    circleOuterBorder = new Kinetic.Circle({
+    shape.objectOuterBorder = new Kinetic.Circle({
       x: 0,
       y: 0,
       radius:this.config.radius + 17,
@@ -46,42 +41,5 @@ var Circle = function(config) {
       stroke: that.config.color,
       strokeWidth: 5
     });
-
-    circleGroup.add(circleOuterBorder);
-    circleGroup.add(circleBorder);
-    circleGroup.add(circle);
-
-    layer.add(circleGroup);
-
-  }
-
-  this.createAnimation = function() {
-    this.animateElement(circle, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(circleBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(circleOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
-  }
-
-  this.animateElement = function(elem, speed, effect) {
-    elem.setScale(0);
-    var tween = new Kinetic.Tween({
-      node: elem, 
-      duration: speed,
-      scaleX: 1,
-      scaleY: 1,
-      easing: effect
-    });
-    tween.play();
-  }
-
-  this.destroy = function() {
-    circleGroup.destroy();
-  }
-
-  this.init = function() {
-    this.createShape();
-  }
-  
-  this.startDrag = function() {
-    circleGroup.startDrag();
   }
 }

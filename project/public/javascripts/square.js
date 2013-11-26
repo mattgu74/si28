@@ -1,9 +1,5 @@
-var Square = function(config) {
+var Square = function(config, shape) {
   var that = this; 
-  var squareGroup = null;
-  var square = null;
-  var squareBorder = null;
-  var squareOuterBorder = null;
 
   this.config = $.extend({
     size: 22,
@@ -11,8 +7,7 @@ var Square = function(config) {
   }, config);
 
   this.createShape = function() {
-
-    squareGroup = new Kinetic.Group({
+    shape.objectGroup = new Kinetic.Group({
       shape: that,
       x: that.config.x,
       y: that.config.y,
@@ -23,7 +18,7 @@ var Square = function(config) {
       draggable: true
     });
 
-    square = new Kinetic.RegularPolygon({
+    shape.object = new Kinetic.RegularPolygon({
       x: -1*(that.config.size + 2)/2,
       y: -1*(that.config.size + 2)/2,
       radius : that.config.size,
@@ -31,7 +26,7 @@ var Square = function(config) {
       fill: that.config.color
     });
 
-    squareBorder = new Kinetic.RegularPolygon({
+    shape.objectBorder = new Kinetic.RegularPolygon({
       x: -1*(that.config.size+3.5)/2,
       y: -1*(that.config.size+3)/2,
       radius : that.config.size + 16,
@@ -41,7 +36,7 @@ var Square = function(config) {
       strokeWidth: 1
     });
 
-    squareOuterBorder = new Kinetic.RegularPolygon({
+    shape.objectOuterBorder = new Kinetic.RegularPolygon({
       x: -1*(that.config.size+4.5)/2,
       y: -1*(that.config.size + 4)/2,
       radius : that.config.size + 28,
@@ -51,43 +46,6 @@ var Square = function(config) {
       strokeWidth: 5
     });
 
-    squareGroup.add(squareOuterBorder);
-    squareGroup.add(squareBorder);
-    squareGroup.add(square);
-
-    squareGroup.rotate(Math.PI / 4);
-
-    layer.add(squareGroup);
-
-  }
-
-  this.createAnimation = function() {
-    this.animateElement(square, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(squareBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(squareOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
-  }
-
-  this.animateElement = function(elem, speed, effect) {
-    elem.setScale(0);
-    var tween = new Kinetic.Tween({
-      node: elem, 
-      duration: speed,
-      scaleX: 1,
-      scaleY: 1,
-      easing: effect
-    });
-    tween.play();
-  }
-
-  this.destroy = function() {
-    squareGroup.destroy();
-  }
-
-  this.init = function() {
-    this.createShape();
-  }
-    
-  this.startDrag = function() {
-    squareGroup.startDrag();
+    shape.objectGroup.rotate(Math.PI / 4);
   }
 }

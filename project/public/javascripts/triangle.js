@@ -1,19 +1,12 @@
-var Triangle = function(config) {
+var Triangle = function(config, shape) {
   var that = this;
-  var triangleGroup = null;
-  var triangle = null;
-  var triangleBorder = null;
-  var triangleOuterBorder = null;
 
   this.config = $.extend({
-    radius: 20,
-    shape: "triangle"
+    radius: 20
   }, config);
 
   this.createShape = function() {
-
-    triangleGroup = new Kinetic.Group({
-      shape: that,
+    shape.objectGroup = new Kinetic.Group({
       x: that.config.x,
       y: that.config.y,
       last_x: that.config.last_x,
@@ -23,7 +16,7 @@ var Triangle = function(config) {
       draggable: true
     });
 
-    triangle = new Kinetic.RegularPolygon({
+    shape.object = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:3,
@@ -31,7 +24,7 @@ var Triangle = function(config) {
       fill: that.config.color
     });
 
-    triangleBorder = new Kinetic.RegularPolygon({
+    shape.objectBorder = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:3,
@@ -41,7 +34,7 @@ var Triangle = function(config) {
       strokeWidth: 1
     });
 
-    triangleOuterBorder = new Kinetic.RegularPolygon({
+    shape.objectOuterBorder = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:3,
@@ -50,42 +43,5 @@ var Triangle = function(config) {
       stroke: that.config.color,
       strokeWidth: 5
     });
-
-    triangleGroup.add(triangleOuterBorder);
-    triangleGroup.add(triangleBorder);
-    triangleGroup.add(triangle);
-
-    layer.add(triangleGroup);
-
-  }
-
-  this.createAnimation = function() {
-    this.animateElement(triangle, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(triangleBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(triangleOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
-  }
-
-  this.animateElement = function(elem, speed, effect) {
-    elem.setScale(0);
-    var tween = new Kinetic.Tween({
-      node: elem, 
-      duration: speed,
-      scaleX: 1,
-      scaleY: 1,
-      easing: effect
-    });
-    tween.play();
-  }
-
-  this.destroy = function() {
-    triangleGroup.destroy();
-  }
-
-  this.init = function() {
-    this.createShape();
-  }
-    
-  this.startDrag = function() {
-    triangleGroup.startDrag();
   }
 }
