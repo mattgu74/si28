@@ -9,6 +9,7 @@ var Square = function(config) {
   this.createShape = function() {
 
     var squareGroup = new Kinetic.Group({
+      shape: that,
       x: that.config.x,
       y: that.config.y,
       last_x: that.config.last_x,
