@@ -57,11 +57,11 @@ background.on('mousedown touchstart', function() {
     newShape = new Shape(shapeConfig);
     newShape.init();
     newShape.createAnimation();
+    newShape.startDrag();
 });
 
 layer.on('mouseup touchend', function() {
     diff = new Date().getTime() - newShape.createdAt.getTime();
-    console.log(diff);
     if(diff < 1000) {
         newShape.destroy();
     }

@@ -80,4 +80,8 @@ var Circle = function(config) {
   this.init = function() {
     this.createShape();
   }
+  
+  this.startDrag = function() {
+    circleGroup.startDrag();
+  }
 }

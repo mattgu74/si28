@@ -40,4 +40,8 @@ var Shape = function(config) {
     obj.createAnimation();
     this.createdAt = new Date();
   }
+  
+  this.startDrag = function() {
+    obj.startDrag();
+  }
 }

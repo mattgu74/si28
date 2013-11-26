@@ -84,4 +84,8 @@ var Triangle = function(config) {
   this.init = function() {
     this.createShape();
   }
+    
+  this.startDrag = function() {
+    triangleGroup.startDrag();
+  }
 }

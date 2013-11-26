@@ -84,4 +84,8 @@ var Polygon = function(config) {
   this.init = function() {
     this.createShape();
   }
+  
+  this.startDrag = function() {
+    polygonGroup.startDrag();
+  }
 }
