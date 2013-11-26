@@ -2,29 +2,71 @@ function min(a,b) {if(a<b) {return a;} else {return b;}}
 function max(a,b) {if(a>b) {return a;} else {return b;}}
 function abs(a) {if(a<0) {return -a;} else {return a;}}
 
-  var lastDist = 0;
-  var startScale = 1;
-  var activeShape = null;
+var lastDist = 0;
+var startScale = 1;
+var activeShape = null;
 
-  function getDistance(p1, p2) {
+function getDistance(p1, p2) {
     return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
-  }
-  var stage = new Kinetic.Stage({
+}
+
+var stage = new Kinetic.Stage({
     container: 'container',
     width: window.innerWidth,
     height: window.innerHeight,
     x: 286,
     y: 100,
     offset: [289, 100]
-  });
+});
+  
+var background = new Kinetic.Rect({
+    x: 0, 
+    y: 0,
+    // Set lastx and lasty to avoid movement
+    last_x: 0,
+    last_y: 0, 
+    width: stage.getWidth(),
+    height: stage.getHeight(),
+    fill: "black"
+});
 
-  window.onresize = function() {
+window.onresize = function() {
     stage.setWidth(window.innerWidth);
     stage.setHeight(window.innerHeight);
-  };
+    background.setWidth(window.innerWidth);
+    background.setHeight(window.innerHeight);
+};
 
-  var layer = new Kinetic.Layer();
-  stage.add(layer);
+var layer = new Kinetic.Layer();
+stage.add(layer);
+layer.add(background);
+
+
+// Lors d'un appui sur le background on génére un élément
+var newShape = null;
+background.on('mousedown touchstart', function() {
+    var mousePos = stage.getMousePosition();
+    var shapeConfig = {
+      x: mousePos.x,
+      y: mousePos.y,
+      last_x: mousePos.x,
+      last_y: mousePos.y,
+      color: choose(colors),
+      shape: choose(shapes)
+    }
+    newShape = new Shape(shapeConfig);
+    newShape.init();
+    newShape.createAnimation();
+});
+
+layer.on('mouseup touchend', function() {
+    diff = new Date().getTime() - newShape.createdAt.getTime();
+    console.log(diff);
+    if(diff < 1000) {
+        newShape.destroy();
+    }
+});
+
 
   var anim = new Kinetic.Animation(function(frame) {
     for (var i=0;i<layer.children.length;i++) {   

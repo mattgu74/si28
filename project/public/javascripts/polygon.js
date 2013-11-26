@@ -1,5 +1,9 @@
 var Polygon = function(config) {
-  var that = this; 
+  var that = this;
+  var polygonGroup = null;
+  var polygon = null;
+  var polygonBorder = null;
+  var polygonOuterBorder = null;
 
   this.config = $.extend({
     radius: 21
@@ -7,7 +11,7 @@ var Polygon = function(config) {
 
   this.createShape = function() {
 
-    var polygonGroup = new Kinetic.Group({
+    polygonGroup = new Kinetic.Group({
       shape: that,
       x: that.config.x,
       y: that.config.y,
@@ -18,7 +22,7 @@ var Polygon = function(config) {
       draggable: true
     });
 
-    var polygon = new Kinetic.RegularPolygon({
+    polygon = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:6,
@@ -26,7 +30,7 @@ var Polygon = function(config) {
       fill: that.config.color
     });
 
-    var polygonBorder = new Kinetic.RegularPolygon({
+    polygonBorder = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:6,
@@ -36,7 +40,7 @@ var Polygon = function(config) {
       strokeWidth: 1
     });
 
-    var polygonOuterBorder = new Kinetic.RegularPolygon({
+    polygonOuterBorder = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:6,
@@ -52,14 +56,12 @@ var Polygon = function(config) {
 
     layer.add(polygonGroup);
 
-    this.createAnimation(polygon, polygonBorder, polygonOuterBorder);
-
   }
 
-  this.createAnimation = function(object, objectBorder, objectOuterBorder) {
-    this.animateElement(object, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(objectBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  this.createAnimation = function() {
+    this.animateElement(polygon, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(polygonBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(polygonOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
   }
 
   this.animateElement = function(elem, speed, effect) {

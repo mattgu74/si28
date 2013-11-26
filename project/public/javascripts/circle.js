@@ -1,5 +1,9 @@
 var Circle = function(config) {
-  var that = this; 
+  var that = this;
+  var circleGroup = null;
+  var circle = null;
+  var circleBorder = null;
+  var circleOuterBorder = null;
 
   this.config = $.extend({
     radius: 23
@@ -7,7 +11,7 @@ var Circle = function(config) {
 
   this.createShape = function() {
 
-    var circleGroup = new Kinetic.Group({
+    circleGroup = new Kinetic.Group({
       shape: that,
       x: that.config.x,
       y: that.config.y,
@@ -18,14 +22,14 @@ var Circle = function(config) {
       draggable: true
     });
 
-    var circle = new Kinetic.Circle({
+    circle = new Kinetic.Circle({
       x: 0,
       y: 0,
       radius:this.config.radius,
       fill: that.config.color
     });
 
-    var circleBorder = new Kinetic.Circle({
+    circleBorder = new Kinetic.Circle({
       x: 0,
       y: 0,
       radius:this.config.radius + 9,
@@ -34,7 +38,7 @@ var Circle = function(config) {
       strokeWidth: 1
     });
 
-    var circleOuterBorder = new Kinetic.Circle({
+    circleOuterBorder = new Kinetic.Circle({
       x: 0,
       y: 0,
       radius:this.config.radius + 17,
@@ -49,14 +53,12 @@ var Circle = function(config) {
 
     layer.add(circleGroup);
 
-    this.createAnimation(circle, circleBorder, circleOuterBorder);
-
   }
 
-  this.createAnimation = function(object, objectBorder, objectOuterBorder) {
-    this.animateElement(object, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(objectBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  this.createAnimation = function() {
+    this.animateElement(circle, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(circleBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(circleOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
   }
 
   this.animateElement = function(elem, speed, effect) {
@@ -72,7 +74,7 @@ var Circle = function(config) {
   }
 
   this.destroy = function() {
-    squareGroup.destroy();
+    circleGroup.destroy();
   }
 
   this.init = function() {

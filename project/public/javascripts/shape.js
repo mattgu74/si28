@@ -1,6 +1,7 @@
 var Shape = function(config) {
   var that = this; 
   var obj = null;
+  this.createdAt = null;
   
   this.config = $.extend({
     shape: "square"
@@ -33,5 +34,10 @@ var Shape = function(config) {
   this.init = function() {
     this.createShape();
     obj.createShape();
+  }
+  
+  this.createAnimation = function() {
+    obj.createAnimation();
+    this.createdAt = new Date();
   }
 }

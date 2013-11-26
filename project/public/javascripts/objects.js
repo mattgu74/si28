@@ -1,4 +1,5 @@
 var colors = ["#91CFC9", "#E1AFD1", "#FFE60A", "#F6A348"]
+var shapes = ["square", "polygon", "triangle", "circle"]
 
 function choose(choices) {
   index = Math.floor(Math.random() * choices.length);
@@ -14,7 +15,6 @@ var shapeConfig = {
   shape: "square"
 }
 var obj1 = new Shape(shapeConfig);
-console.log(obj1);
 obj1.init();
 
 var shapeConfig = {

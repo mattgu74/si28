@@ -1,5 +1,9 @@
 var Triangle = function(config) {
-  var that = this; 
+  var that = this;
+  var triangleGroup = null;
+  var triangle = null;
+  var triangleBorder = null;
+  var triangleOuterBorder = null;
 
   this.config = $.extend({
     radius: 20,
@@ -8,7 +12,7 @@ var Triangle = function(config) {
 
   this.createShape = function() {
 
-    var triangleGroup = new Kinetic.Group({
+    triangleGroup = new Kinetic.Group({
       shape: that,
       x: that.config.x,
       y: that.config.y,
@@ -19,7 +23,7 @@ var Triangle = function(config) {
       draggable: true
     });
 
-    var triangle = new Kinetic.RegularPolygon({
+    triangle = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:3,
@@ -27,7 +31,7 @@ var Triangle = function(config) {
       fill: that.config.color
     });
 
-    var triangleBorder = new Kinetic.RegularPolygon({
+    triangleBorder = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:3,
@@ -37,7 +41,7 @@ var Triangle = function(config) {
       strokeWidth: 1
     });
 
-    var triangleOuterBorder = new Kinetic.RegularPolygon({
+    triangleOuterBorder = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,
       sides:3,
@@ -53,14 +57,12 @@ var Triangle = function(config) {
 
     layer.add(triangleGroup);
 
-    this.createAnimation(triangle, triangleBorder, triangleOuterBorder);
-
   }
 
-  this.createAnimation = function(object, objectBorder, objectOuterBorder) {
-    this.animateElement(object, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(objectBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  this.createAnimation = function() {
+    this.animateElement(triangle, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(triangleBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(triangleOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
   }
 
   this.animateElement = function(elem, speed, effect) {
@@ -76,7 +78,7 @@ var Triangle = function(config) {
   }
 
   this.destroy = function() {
-    squareGroup.destroy();
+    triangleGroup.destroy();
   }
 
   this.init = function() {

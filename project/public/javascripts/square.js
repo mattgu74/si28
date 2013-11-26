@@ -1,5 +1,9 @@
 var Square = function(config) {
   var that = this; 
+  var squareGroup = null;
+  var square = null;
+  var squareBorder = null;
+  var squareOuterBorder = null;
 
   this.config = $.extend({
     size: 22,
@@ -8,7 +12,7 @@ var Square = function(config) {
 
   this.createShape = function() {
 
-    var squareGroup = new Kinetic.Group({
+    squareGroup = new Kinetic.Group({
       shape: that,
       x: that.config.x,
       y: that.config.y,
@@ -19,7 +23,7 @@ var Square = function(config) {
       draggable: true
     });
 
-    var square = new Kinetic.RegularPolygon({
+    square = new Kinetic.RegularPolygon({
       x: -1*(that.config.size + 2)/2,
       y: -1*(that.config.size + 2)/2,
       radius : that.config.size,
@@ -27,7 +31,7 @@ var Square = function(config) {
       fill: that.config.color
     });
 
-    var squareBorder = new Kinetic.RegularPolygon({
+    squareBorder = new Kinetic.RegularPolygon({
       x: -1*(that.config.size+3.5)/2,
       y: -1*(that.config.size+3)/2,
       radius : that.config.size + 16,
@@ -37,7 +41,7 @@ var Square = function(config) {
       strokeWidth: 1
     });
 
-    var squareOuterBorder = new Kinetic.RegularPolygon({
+    squareOuterBorder = new Kinetic.RegularPolygon({
       x: -1*(that.config.size+4.5)/2,
       y: -1*(that.config.size + 4)/2,
       radius : that.config.size + 28,
@@ -55,19 +59,16 @@ var Square = function(config) {
 
     layer.add(squareGroup);
 
-    this.createAnimation(square, squareBorder, squareOuterBorder);
-
   }
 
-  this.createAnimation = function(object, objectBorder, objectOuterBorder) {
-    this.animateElement(object, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(objectBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+  this.createAnimation = function() {
+    this.animateElement(square, 0.8, Kinetic.Easings.BounceEaseIn);
+    this.animateElement(squareBorder, 1, Kinetic.Easings.EaseIn);
+    this.animateElement(squareOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
   }
 
   this.animateElement = function(elem, speed, effect) {
     elem.setScale(0);
-    console.log(elem.attrs.width / 20);
     var tween = new Kinetic.Tween({
       node: elem, 
       duration: speed,
@@ -76,7 +77,6 @@ var Square = function(config) {
       easing: effect
     });
     tween.play();
-
   }
 
   this.destroy = function() {
