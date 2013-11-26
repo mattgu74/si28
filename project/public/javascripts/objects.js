@@ -6,6 +6,7 @@ function choose(choices) {
   return choices[index];
 }
 
+/*
 var shapeConfig = {
   x:200,
   y:200,
@@ -49,3 +50,4 @@ var shapeConfig = {
 }
 var obj4 = new Shape(shapeConfig);
 obj4.init();
+*/
