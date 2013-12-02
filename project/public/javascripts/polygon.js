@@ -12,7 +12,7 @@ var Polygon = function(config, shape) {
       last_x: that.config.last_x,
       last_y: that.config.last_y,
       color: that.config.color,
-      shape: "triangle",
+      shape: "polygon",
       draggable: true
     });
 
