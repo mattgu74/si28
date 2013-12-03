@@ -1,6 +1,8 @@
 var Shape = function(config) {
   var obj = null;
   this.createdAt = null;
+
+  var thisShape = this;
   
   this.objectGroup = null;
   this.object = null;
@@ -38,7 +40,7 @@ var Shape = function(config) {
   }
   
   this.destroy = function() {
-    this.objectGroup.destroy();
+    thisShape.objectGroup.destroy();
   }
 
   this.createAnimation = function() {
@@ -46,6 +48,8 @@ var Shape = function(config) {
     this.animateElement(this.objectBorder, 1, Kinetic.Easings.EaseIn);
     this.animateElement(this.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
     this.createdAt = new Date();
+
+    this.loadAnimation();
   }
 
   this.animateElement = function(elem, speed, effect) {
@@ -58,6 +62,38 @@ var Shape = function(config) {
       easing: effect
     });
     tween.play();
+  }
+
+  this.loadAnimation = function() {
+    var arc = new Kinetic.Shape({
+      drawFunc: function(context) {
+          var x = 0;
+          var y = 0;
+          var radius = 39;
+          var startAngle = -0.5 * Math.PI;
+          var endAngle = this.getAttr('pourcent') * Math.PI;
+          context.beginPath();
+          context.arc(x, y, radius, startAngle, endAngle, false);
+          context.fillStrokeShape(this);
+      },
+      stroke:"#000000",
+      strokeWidth:9,
+      pourcent:-0.49,
+      draggable:true
+    });
+    this.objectGroup.add(arc);
+
+    var tween = new Kinetic.Tween({
+      node:arc,
+      duration:3,
+      pourcent:1.5,
+      onFinish:thisShape.destroy
+    });
+
+    setTimeout(function() {
+      tween.play();
+    }, 1000);
+    
   }
   
   this.startDrag = function() {

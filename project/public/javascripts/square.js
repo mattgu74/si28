@@ -2,7 +2,7 @@ var Square = function(config, shape) {
   var that = this; 
 
   this.config = $.extend({
-    size: 22,
+    size: 27,
     shape: "square"
   }, config);
 
@@ -29,7 +29,7 @@ var Square = function(config, shape) {
     shape.objectBorder = new Kinetic.RegularPolygon({
       x: -1*(that.config.size+3.5)/2,
       y: -1*(that.config.size+3)/2,
-      radius : that.config.size + 16,
+      radius : that.config.size + 14,
       sides:4,
       fill: 'transparent',
       stroke: that.config.color,
@@ -39,7 +39,7 @@ var Square = function(config, shape) {
     shape.objectOuterBorder = new Kinetic.RegularPolygon({
       x: -1*(that.config.size+4.5)/2,
       y: -1*(that.config.size + 4)/2,
-      radius : that.config.size + 28,
+      radius : that.config.size + 24,
       sides:4,
       fill: 'black',
       stroke: that.config.color,

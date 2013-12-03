@@ -2,7 +2,7 @@ var Polygon = function(config, shape) {
   var that = this;
 
   this.config = $.extend({
-    radius: 20
+    radius: 23
   }, config);
 
   this.createShape = function() {
@@ -28,7 +28,7 @@ var Polygon = function(config, shape) {
       x: 0,
       y: 0,
       sides:6,
-      radius:this.config.radius + 14,
+      radius:this.config.radius + 13,
       fill: 'transparent',
       stroke: that.config.color,
       strokeWidth: 1
@@ -38,7 +38,7 @@ var Polygon = function(config, shape) {
       x: 0,
       y: 0,
       sides:6,
-      radius:this.config.radius + 28,
+      radius:this.config.radius + 22,
       fill: 'black',
       stroke: that.config.color,
       strokeWidth: 5
