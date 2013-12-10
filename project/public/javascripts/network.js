@@ -26,7 +26,9 @@ function send_object(obj, pos) {
              'x': obj.getAttr('x')/stage.getWidth(), 
              'y': obj.getAttr('y')/stage.getHeight(), 
              'last_x': obj.getAttr('last_x')/stage.getWidth(), 
-             'last_y': obj.getAttr('last_y')/stage.getHeight()};
+             'last_y': obj.getAttr('last_y')/stage.getHeight(),
+             'anim': obj.status()
+             };
     socket.emit('obj_'+pos, data);
     obj.destroy();
 }
@@ -40,7 +42,8 @@ function receive_object(data) {
           color: data['color'],
           last_x: data['last_x']*stage.getWidth(),
           last_y: data['last_y']*stage.getHeight(),
-          shape: data['shape']
+          shape: data['shape'],
+          anim: data['anim']
         });
       obj.init();
     }

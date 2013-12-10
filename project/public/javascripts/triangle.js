@@ -45,7 +45,7 @@ var Triangle = function(config, shape) {
     });
   }
   
-  this.loadAnimation = function() {
+  this.loadAnimation = function(duration) {
     /* TRIANGLE DESTROY ANIMATION */ 
     var triangleLineRight = new Kinetic.Line({
       points : [0, -48, 0, -48],
@@ -72,14 +72,14 @@ var Triangle = function(config, shape) {
     var tween3 = new Kinetic.Tween({
       node : triangleLineLeft,
       points : [-42, 24, 0, -48],
-      duration:1,
+      duration:duration/3,
       onFinish:shape.destroy
     });
 
     var tween2 = new Kinetic.Tween({
       node : triangleLineBottom,
       points : [42, 24, -42, 24],
-      duration:1,
+      duration:duration/3,
       onFinish:function() {
         tween3.play();
       }
@@ -88,13 +88,13 @@ var Triangle = function(config, shape) {
     var tween = new Kinetic.Tween({
       node : triangleLineRight,
       points : [0, -48, 42, 24],
-      duration:1,
+      duration:duration/3,
       onFinish:function() {
         tween2.play();
       }
     });
 
-    tween.play();
+    shape.tweens = [tween, tween2, tween3];
   }
   
 }

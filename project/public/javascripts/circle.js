@@ -43,7 +43,7 @@ var Circle = function(config, shape) {
     });
   }
   
-  this.loadAnimation = function() {
+  this.loadAnimation = function(duration) {
   /* CIRCLE DESTROY ANIMATION */
     var arc = new Kinetic.Shape({
       drawFunc: function(context) {
@@ -66,12 +66,12 @@ var Circle = function(config, shape) {
 
     var tween = new Kinetic.Tween({
       node:arc,
-      duration:3,
+      duration:duration,
       pourcent:1.5,
       onFinish:shape.destroy
     });
     
-    tween.play();
+    shape.tweens = [tween];
   }
   
 }

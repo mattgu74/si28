@@ -45,7 +45,7 @@ var Polygon = function(config, shape) {
     });
   }
   
-  this.loadAnimation = function() {
+  this.loadAnimation = function(duration) {
     /* POLYGONE DESTROY ANIMATION */ 
     var polygoneLineOne = new Kinetic.Line({
       points : [0, -47, 0, -47],
@@ -93,14 +93,14 @@ var Polygon = function(config, shape) {
     var tween6 = new Kinetic.Tween({
       node : polygoneLineSix,
       points : [-40, -23, 0, -47],
-      duration:1,
+      duration:duration/6,
       onFinish:shape.destroy
     });
 
     var tween5 = new Kinetic.Tween({
       node : polygoneLineFive,
       points : [-40, 23, -40, -23],
-      duration:1,
+      duration:duration/6,
       onFinish:function() {
         tween6.play();
       }
@@ -109,7 +109,7 @@ var Polygon = function(config, shape) {
     var tween4 = new Kinetic.Tween({
       node : polygoneLineFour,
       points : [0, 47, -40, 23],
-      duration:1,
+      duration:duration/6,
       onFinish:function() {
         tween5.play();
       }
@@ -118,7 +118,7 @@ var Polygon = function(config, shape) {
     var tween3 = new Kinetic.Tween({
       node : polygoneLineThree,
       points : [40, 23, 0 , 47],
-      duration:1,
+      duration:duration/6,
       onFinish:function() {
         tween4.play();
       }
@@ -127,7 +127,7 @@ var Polygon = function(config, shape) {
     var tween2 = new Kinetic.Tween({
       node : polygoneLineTwo,
       points : [40, -23, 40, 23],
-      duration:1,
+      duration:duration/6,
       onFinish:function() {
         tween3.play();
       }
@@ -136,12 +136,12 @@ var Polygon = function(config, shape) {
     var tween = new Kinetic.Tween({
       node : polygoneLineOne,
       points : [0, -47, 40, -23],
-      duration:1,
+      duration:duration/6,
       onFinish:function() {
         tween2.play();
       }
     });
-
-    tween.play();
+    
+    shape.tweens = [tween, tween2, tween3, tween4, tween5, tween6];
   }
 }

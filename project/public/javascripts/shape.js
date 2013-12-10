@@ -1,5 +1,6 @@
 var Shape = function(config) {
   var obj = null;
+  var animationLength = 10000;
   this.createdAt = null;
 
   var thisShape = this;
@@ -8,6 +9,7 @@ var Shape = function(config) {
   this.object = null;
   this.objectBorder = null;
   this.objectOuterBorder = null;
+  this.tweens = [];
   
   this.config = $.extend({
     shape: "square"
@@ -37,9 +39,46 @@ var Shape = function(config) {
     this.objectGroup.add(this.object);
 
     layer.add(this.objectGroup);
+    obj.loadAnimation(animationLength / 1000);
     
-    setTimeout(obj.loadAnimation, 1000);
+    this.seek(config.anim);
+    this.objectGroup.status = this.status;
+    
     this.objectGroup.on('dblclick', this.destroy);
+  }
+  
+  // Obtenir le status des tweens (etat du loadAnimation)
+  this.status = function() {
+        var c = 1000;
+        for (var i=0;i<thisShape.tweens.length;i++)
+        {
+            var step = animationLength / thisShape.tweens.length;
+            c += thisShape.tweens[i].tween.getPosition() * step;
+        }
+        return c;
+  }
+  
+  // Retablir les tweens dans l'état de l'écran d'avant (etat du loadAnimation)
+  this.seek = function(count) {
+    setTimeout(function() { thisShape.tweens[0].play(); }, 1000 - count);
+    if(count <= 1000) {
+        setTimeout(function() { thisShape.tweens[0].play(); }, 1000 - count);
+    } else {
+        count -= 1000;
+        var step = animationLength / thisShape.tweens.length;
+        for (var i=0;i<thisShape.tweens.length;i++)
+        {
+            if(count > step) {
+                thisShape.tweens[i].seek(step / 1000);
+                thisShape.tweens[i].play();
+                count -= step;
+            } else if(count > 0) {
+                thisShape.tweens[i].seek(count / 1000);
+                thisShape.tweens[i].play();
+                count = 0;
+            }
+        }
+    }
   }
   
   this.destroy = function() {

@@ -52,7 +52,8 @@ background.on('mousedown touchstart', function() {
       last_x: mousePos.x,
       last_y: mousePos.y,
       color: choose(colors),
-      shape: choose(shapes)
+      shape: choose(shapes),
+      anim: 0
     }
     newShape = new Shape(shapeConfig);
     newShape.init();

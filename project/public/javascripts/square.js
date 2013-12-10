@@ -1,5 +1,5 @@
 var Square = function(config, shape) {
-  var that = this; 
+  var that = this;
 
   this.config = $.extend({
     size: 27,
@@ -49,7 +49,7 @@ var Square = function(config, shape) {
     shape.objectGroup.rotate(Math.PI / 4);
   }
   
-  this.loadAnimation = function() {
+  this.loadAnimation = function(duration) {
     /* SQUARE DESTROY ANIMATION */ 
     var squareLineTop = new Kinetic.Line({
       points : [-39, -57, -39, -57],
@@ -83,14 +83,14 @@ var Square = function(config, shape) {
     var tween4 = new Kinetic.Tween({
       node : squareLineLeft,
       points : [-38, 17, -38, -57],
-      duration:1,
+      duration:duration/4,
       onFinish:shape.destroy
     });
 
     var tween3 = new Kinetic.Tween({
       node : squareLineBottom,
       points : [38, 16, -39, 16],
-      duration:1,
+      duration:duration/4,
       onFinish:function() {
         tween4.play();
       }
@@ -99,7 +99,7 @@ var Square = function(config, shape) {
     var tween2 = new Kinetic.Tween({
       node : squareLineRight,
       points : [38, -60, 38, 17],
-      duration:1,
+      duration:duration/4,
       onFinish:function() {
         tween3.play();
       }
@@ -108,13 +108,13 @@ var Square = function(config, shape) {
     var tween = new Kinetic.Tween({
       node : squareLineTop,
       points : [-39, -57, 39, -57],
-      duration:1,
+      duration:duration/4,
       onFinish:function() {
         tween2.play();
       }
     });
     
-    tween.play();
+    shape.tweens = [tween, tween2, tween3, tween4];
   }
   
 }
