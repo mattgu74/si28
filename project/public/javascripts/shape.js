@@ -38,6 +38,7 @@ var Shape = function(config) {
 
     layer.add(this.objectGroup);
     
+    setTimeout(obj.loadAnimation, 1000);
     this.objectGroup.on('dblclick', this.destroy);
   }
   
@@ -50,7 +51,6 @@ var Shape = function(config) {
     this.animateElement(this.objectBorder, 1, Kinetic.Easings.EaseIn);
     this.animateElement(this.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
     this.createdAt = new Date();
-    setTimeout(obj.loadAnimation, 1000);
   }
 
   this.animateElement = function(elem, speed, effect) {
