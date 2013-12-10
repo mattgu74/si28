@@ -44,4 +44,104 @@ var Polygon = function(config, shape) {
       strokeWidth: 5
     });
   }
+  
+  this.destroyAnimation = function() {
+    /* POLYGONE DESTROY ANIMATION */ 
+    var polygoneLineOne = new Kinetic.Line({
+      points : [0, -47, 0, -47],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var polygoneLineTwo = new Kinetic.Line({
+      points : [40, -23, 40, -23],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var polygoneLineThree = new Kinetic.Line({
+      points : [40, 23, 40, 23],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var polygoneLineFour = new Kinetic.Line({
+      points : [0, 47, 0, 47],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var polygoneLineFive = new Kinetic.Line({
+      points : [-40, 23, -40, 23],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var polygoneLineSix = new Kinetic.Line({
+      points : [-40, -23, -40, -23],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    shape.objectGroup.add(polygoneLineOne);
+    shape.objectGroup.add(polygoneLineTwo);
+    shape.objectGroup.add(polygoneLineThree);
+    shape.objectGroup.add(polygoneLineFour);
+    shape.objectGroup.add(polygoneLineFive);
+    shape.objectGroup.add(polygoneLineSix);
+
+    var tween6 = new Kinetic.Tween({
+      node : polygoneLineSix,
+      points : [-40, -23, 0, -47],
+      duration:1,
+      onFinish:shape.destroy
+    });
+
+    var tween5 = new Kinetic.Tween({
+      node : polygoneLineFive,
+      points : [-40, 23, -40, -23],
+      duration:1,
+      onFinish:function() {
+        tween6.play();
+      }
+    });
+
+    var tween4 = new Kinetic.Tween({
+      node : polygoneLineFour,
+      points : [0, 47, -40, 23],
+      duration:1,
+      onFinish:function() {
+        tween5.play();
+      }
+    });
+
+    var tween3 = new Kinetic.Tween({
+      node : polygoneLineThree,
+      points : [40, 23, 0 , 47],
+      duration:1,
+      onFinish:function() {
+        tween4.play();
+      }
+    });
+
+    var tween2 = new Kinetic.Tween({
+      node : polygoneLineTwo,
+      points : [40, -23, 40, 23],
+      duration:1,
+      onFinish:function() {
+        tween3.play();
+      }
+    });
+
+    var tween = new Kinetic.Tween({
+      node : polygoneLineOne,
+      points : [0, -47, 40, -23],
+      duration:1,
+      onFinish:function() {
+        tween2.play();
+      }
+    });
+
+    tween.play();
+  }
 }

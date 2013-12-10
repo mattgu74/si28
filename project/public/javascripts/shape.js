@@ -65,37 +65,7 @@ var Shape = function(config) {
   }
 
   this.loadAnimation = function() {
-    /* CIRCLE DESTROY ANIMATION */
-    /* var arc = new Kinetic.Shape({
-      drawFunc: function(context) {
-          var x = 0;
-          var y = 0;
-          var radius = 39;
-          var startAngle = -0.5 * Math.PI;
-          var endAngle = this.getAttr('pourcent') * Math.PI;
-          context.beginPath();
-          context.arc(x, y, radius, startAngle, endAngle, false);
-          context.fillStrokeShape(this);
-      },
-      stroke:"#000000",
-      strokeWidth:9,
-      pourcent:-0.49,
-      draggable:true
-    });
-    this.objectGroup.add(arc);
-
-    var tween = new Kinetic.Tween({
-      node:arc,
-      duration:3,
-      pourcent:1.5,
-      onFinish:thisShape.destroy
-    });
-
-    setTimeout(function() {
-      tween.play();
-    }, 1000);
-    */
-
+    setTimeout(obj.destroyAnimation, 1000);
     /* SQUARE DESTROY ANIMATION */ 
     /* var squareLineTop = new Kinetic.Line({
       points : [-39, -57, -39, -57],
@@ -160,7 +130,6 @@ var Shape = function(config) {
       }
     });
 
-    setTimeout(function() {
       tween.play();
     }, 1000);*/
 
@@ -216,105 +185,7 @@ var Shape = function(config) {
       tween.play();
     }, 1000);*/
 
-    /* POLYGONE DESTROY ANIMATION */ 
-    /* var polygoneLineOne = new Kinetic.Line({
-      points : [0, -47, 0, -47],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var polygoneLineTwo = new Kinetic.Line({
-      points : [40, -23, 40, -23],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var polygoneLineThree = new Kinetic.Line({
-      points : [40, 23, 40, 23],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var polygoneLineFour = new Kinetic.Line({
-      points : [0, 47, 0, 47],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var polygoneLineFive = new Kinetic.Line({
-      points : [-40, 23, -40, 23],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var polygoneLineSix = new Kinetic.Line({
-      points : [-40, -23, -40, -23],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    this.objectGroup.add(polygoneLineOne);
-    this.objectGroup.add(polygoneLineTwo);
-    this.objectGroup.add(polygoneLineThree);
-    this.objectGroup.add(polygoneLineFour);
-    this.objectGroup.add(polygoneLineFive);
-    this.objectGroup.add(polygoneLineSix);
-
-    var tween6 = new Kinetic.Tween({
-      node : polygoneLineSix,
-      points : [-40, -23, 0, -47],
-      duration:1,
-      onFinish:thisShape.destroy
-    });
-
-    var tween5 = new Kinetic.Tween({
-      node : polygoneLineFive,
-      points : [-40, 23, -40, -23],
-      duration:1,
-      onFinish:function() {
-        tween6.play();
-      }
-    });
-
-    var tween4 = new Kinetic.Tween({
-      node : polygoneLineFour,
-      points : [0, 47, -40, 23],
-      duration:1,
-      onFinish:function() {
-        tween5.play();
-      }
-    });
-
-    var tween3 = new Kinetic.Tween({
-      node : polygoneLineThree,
-      points : [40, 23, 0 , 47],
-      duration:1,
-      onFinish:function() {
-        tween4.play();
-      }
-    });
-
-    var tween2 = new Kinetic.Tween({
-      node : polygoneLineTwo,
-      points : [40, -23, 40, 23],
-      duration:1,
-      onFinish:function() {
-        tween3.play();
-      }
-    });
-
-    var tween = new Kinetic.Tween({
-      node : polygoneLineOne,
-      points : [0, -47, 40, -23],
-      duration:1,
-      onFinish:function() {
-        tween2.play();
-      }
-    });
-
-    setTimeout(function() {
-      tween.play();
-    }, 1000);*/
+    
   }
   
   this.startDrag = function() {

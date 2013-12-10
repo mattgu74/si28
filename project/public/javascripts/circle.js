@@ -42,4 +42,36 @@ var Circle = function(config, shape) {
       strokeWidth: 5
     });
   }
+  
+  this.destroyAnimation = function() {
+  /* CIRCLE DESTROY ANIMATION */
+    var arc = new Kinetic.Shape({
+      drawFunc: function(context) {
+          var x = 0;
+          var y = 0;
+          var radius = 39;
+          var startAngle = -0.5 * Math.PI;
+          var endAngle = this.getAttr('pourcent') * Math.PI;
+          context.beginPath();
+          context.arc(x, y, radius, startAngle, endAngle, false);
+          context.fillStrokeShape(this);
+      },
+      stroke:"#000000",
+      strokeWidth:9,
+      pourcent:-0.49,
+      draggable:true
+    });
+    
+    shape.objectGroup.add(arc);
+
+    var tween = new Kinetic.Tween({
+      node:arc,
+      duration:3,
+      pourcent:1.5,
+      onFinish:shape.destroy
+    });
+    
+    tween.play();
+  }
+  
 }

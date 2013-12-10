@@ -44,4 +44,57 @@ var Triangle = function(config, shape) {
       strokeWidth: 5
     });
   }
+  
+  this.destroyAnimation = function() {
+    /* TRIANGLE DESTROY ANIMATION */ 
+    var triangleLineRight = new Kinetic.Line({
+      points : [0, -48, 0, -48],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var triangleLineBottom = new Kinetic.Line({
+      points : [42, 24, 42, 24],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    var triangleLineLeft = new Kinetic.Line({
+      points : [-42, 24, -42, 24],
+      stroke:"#000000",
+      lineCap:"round",
+      strokeWidth:10
+    });
+    shape.objectGroup.add(triangleLineLeft);
+    shape.objectGroup.add(triangleLineBottom);
+    shape.objectGroup.add(triangleLineRight);
+
+    var tween3 = new Kinetic.Tween({
+      node : triangleLineLeft,
+      points : [-42, 24, 0, -48],
+      duration:1,
+      onFinish:shape.destroy
+    });
+
+    var tween2 = new Kinetic.Tween({
+      node : triangleLineBottom,
+      points : [42, 24, -42, 24],
+      duration:1,
+      onFinish:function() {
+        tween3.play();
+      }
+    });
+
+    var tween = new Kinetic.Tween({
+      node : triangleLineRight,
+      points : [0, -48, 42, 24],
+      duration:1,
+      onFinish:function() {
+        tween2.play();
+      }
+    });
+
+    tween.play();
+  }
+  
 }

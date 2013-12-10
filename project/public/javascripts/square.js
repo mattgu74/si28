@@ -48,4 +48,73 @@ var Square = function(config, shape) {
 
     shape.objectGroup.rotate(Math.PI / 4);
   }
+  
+  this.destroyAnimation = function() {
+    /* SQUARE DESTROY ANIMATION */ 
+    var squareLineTop = new Kinetic.Line({
+      points : [-39, -57, -39, -57],
+      stroke:"#000000",
+      strokeWidth:10,
+      rotationDeg:-45
+    });
+    var squareLineRight = new Kinetic.Line({
+      points : [38, -60, 38, -60],
+      stroke:"#000000",
+      strokeWidth:10,
+      rotationDeg:-45
+    });
+    var squareLineBottom = new Kinetic.Line({
+      points : [38, 16, 38, 16],
+      stroke:"#000000",
+      strokeWidth:10,
+      rotationDeg:-45
+    });
+    var squareLineLeft = new Kinetic.Line({
+      points : [-38, 17, -38, 17],
+      stroke:"#000000",
+      strokeWidth:10,
+      rotationDeg:-45
+    });
+    shape.objectGroup.add(squareLineTop);
+    shape.objectGroup.add(squareLineRight);
+    shape.objectGroup.add(squareLineBottom);
+    shape.objectGroup.add(squareLineLeft);
+
+    var tween4 = new Kinetic.Tween({
+      node : squareLineLeft,
+      points : [-38, 17, -38, -57],
+      duration:1,
+      onFinish:shape.destroy
+    });
+
+    var tween3 = new Kinetic.Tween({
+      node : squareLineBottom,
+      points : [38, 16, -39, 16],
+      duration:1,
+      onFinish:function() {
+        tween4.play();
+      }
+    });
+
+    var tween2 = new Kinetic.Tween({
+      node : squareLineRight,
+      points : [38, -60, 38, 17],
+      duration:1,
+      onFinish:function() {
+        tween3.play();
+      }
+    });
+
+    var tween = new Kinetic.Tween({
+      node : squareLineTop,
+      points : [-39, -57, 39, -57],
+      duration:1,
+      onFinish:function() {
+        tween2.play();
+      }
+    });
+    
+    tween.play();
+  }
+  
 }
