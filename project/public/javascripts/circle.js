@@ -58,8 +58,7 @@ var Circle = function(config, shape) {
       },
       stroke:"#000000",
       strokeWidth:9,
-      pourcent:-0.49,
-      draggable:true
+      pourcent:-0.49
     });
     
     shape.objectGroup.add(arc);
