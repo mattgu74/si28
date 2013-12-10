@@ -49,7 +49,7 @@ var Square = function(config, shape) {
     shape.objectGroup.rotate(Math.PI / 4);
   }
   
-  this.destroyAnimation = function() {
+  this.loadAnimation = function() {
     /* SQUARE DESTROY ANIMATION */ 
     var squareLineTop = new Kinetic.Line({
       points : [-39, -57, -39, -57],

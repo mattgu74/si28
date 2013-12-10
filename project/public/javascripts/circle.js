@@ -43,7 +43,7 @@ var Circle = function(config, shape) {
     });
   }
   
-  this.destroyAnimation = function() {
+  this.loadAnimation = function() {
   /* CIRCLE DESTROY ANIMATION */
     var arc = new Kinetic.Shape({
       drawFunc: function(context) {

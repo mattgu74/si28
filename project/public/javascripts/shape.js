@@ -37,6 +37,8 @@ var Shape = function(config) {
     this.objectGroup.add(this.object);
 
     layer.add(this.objectGroup);
+    
+    this.objectGroup.on('dblclick', this.destroy);
   }
   
   this.destroy = function() {
@@ -48,8 +50,7 @@ var Shape = function(config) {
     this.animateElement(this.objectBorder, 1, Kinetic.Easings.EaseIn);
     this.animateElement(this.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
     this.createdAt = new Date();
-
-    this.loadAnimation();
+    setTimeout(obj.loadAnimation, 1000);
   }
 
   this.animateElement = function(elem, speed, effect) {
@@ -62,130 +63,6 @@ var Shape = function(config) {
       easing: effect
     });
     tween.play();
-  }
-
-  this.loadAnimation = function() {
-    setTimeout(obj.destroyAnimation, 1000);
-    /* SQUARE DESTROY ANIMATION */ 
-    /* var squareLineTop = new Kinetic.Line({
-      points : [-39, -57, -39, -57],
-      stroke:"#000000",
-      strokeWidth:10,
-      rotationDeg:-45
-    });
-    var squareLineRight = new Kinetic.Line({
-      points : [38, -60, 38, -60],
-      stroke:"#000000",
-      strokeWidth:10,
-      rotationDeg:-45
-    });
-    var squareLineBottom = new Kinetic.Line({
-      points : [38, 16, 38, 16],
-      stroke:"#000000",
-      strokeWidth:10,
-      rotationDeg:-45
-    });
-    var squareLineLeft = new Kinetic.Line({
-      points : [-38, 17, -38, 17],
-      stroke:"#000000",
-      strokeWidth:10,
-      rotationDeg:-45
-    });
-    this.objectGroup.add(squareLineTop);
-    this.objectGroup.add(squareLineRight);
-    this.objectGroup.add(squareLineBottom);
-    this.objectGroup.add(squareLineLeft);
-
-    var tween4 = new Kinetic.Tween({
-      node : squareLineLeft,
-      points : [-38, 17, -38, -57],
-      duration:1,
-      //onFinish:thisShape.destroy
-    });
-
-    var tween3 = new Kinetic.Tween({
-      node : squareLineBottom,
-      points : [38, 16, -39, 16],
-      duration:1,
-      onFinish:function() {
-        tween4.play();
-      }
-    });
-
-    var tween2 = new Kinetic.Tween({
-      node : squareLineRight,
-      points : [38, -60, 38, 17],
-      duration:1,
-      onFinish:function() {
-        tween3.play();
-      }
-    });
-
-    var tween = new Kinetic.Tween({
-      node : squareLineTop,
-      points : [-39, -57, 39, -57],
-      duration:1,
-      onFinish:function() {
-        tween2.play();
-      }
-    });
-
-      tween.play();
-    }, 1000);*/
-
-    /* TRIANGLE DESTROY ANIMATION */ 
-    /* var triangleLineRight = new Kinetic.Line({
-      points : [0, -48, 0, -48],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var triangleLineBottom = new Kinetic.Line({
-      points : [42, 24, 42, 24],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    var triangleLineLeft = new Kinetic.Line({
-      points : [-42, 24, -42, 24],
-      stroke:"#000000",
-      lineCap:"round",
-      strokeWidth:10
-    });
-    this.objectGroup.add(triangleLineLeft);
-    this.objectGroup.add(triangleLineBottom);
-    this.objectGroup.add(triangleLineRight);
-
-    var tween3 = new Kinetic.Tween({
-      node : triangleLineLeft,
-      points : [-42, 24, 0, -48],
-      duration:1,
-      //onFinish:thisShape.destroy
-    });
-
-    var tween2 = new Kinetic.Tween({
-      node : triangleLineBottom,
-      points : [42, 24, -42, 24],
-      duration:1,
-      onFinish:function() {
-        tween3.play();
-      }
-    });
-
-    var tween = new Kinetic.Tween({
-      node : triangleLineRight,
-      points : [0, -48, 42, 24],
-      duration:1,
-      onFinish:function() {
-        tween2.play();
-      }
-    });
-
-    setTimeout(function() {
-      tween.play();
-    }, 1000);*/
-
-    
   }
   
   this.startDrag = function() {

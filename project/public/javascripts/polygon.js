@@ -45,7 +45,7 @@ var Polygon = function(config, shape) {
     });
   }
   
-  this.destroyAnimation = function() {
+  this.loadAnimation = function() {
     /* POLYGONE DESTROY ANIMATION */ 
     var polygoneLineOne = new Kinetic.Line({
       points : [0, -47, 0, -47],

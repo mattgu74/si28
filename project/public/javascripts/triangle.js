@@ -45,7 +45,7 @@ var Triangle = function(config, shape) {
     });
   }
   
-  this.destroyAnimation = function() {
+  this.loadAnimation = function() {
     /* TRIANGLE DESTROY ANIMATION */ 
     var triangleLineRight = new Kinetic.Line({
       points : [0, -48, 0, -48],
