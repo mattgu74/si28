@@ -51,17 +51,17 @@ var Triangle = function(config, shape) {
       points : [0, -48, 0, -48],
       stroke:"#000000",
       lineCap:"round",
-      strokeWidth:10
+      strokeWidth:0
     });
     var triangleLineBottom = new Kinetic.Line({
       points : [42, 24, 42, 24],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
     var triangleLineLeft = new Kinetic.Line({
       points : [-42, 24, -42, 24],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
@@ -73,7 +73,9 @@ var Triangle = function(config, shape) {
       node : triangleLineLeft,
       points : [-42, 24, 0, -48],
       duration:duration/3,
-      onFinish:shape.destroy
+      onFinish:function() {
+        shape.destroyAnimation();
+      }
     });
 
     var tween2 = new Kinetic.Tween({
@@ -81,20 +83,32 @@ var Triangle = function(config, shape) {
       points : [42, 24, -42, 24],
       duration:duration/3,
       onFinish:function() {
+        triangleLineLeft.setStroke('#000000');
         tween3.play();
+      }
+    });
+
+    var tween1 = new Kinetic.Tween({
+      node : triangleLineRight,
+      points : [0, -48, 42, 24],
+      strokeWidth : 10,
+      duration:duration/3,
+      onFinish:function() {
+        triangleLineBottom.setStroke('#000000');
+        tween2.play();
       }
     });
 
     var tween = new Kinetic.Tween({
       node : triangleLineRight,
-      points : [0, -48, 42, 24],
-      duration:duration/3,
+      strokeWidth : 10,
+      duration : 0.5,
       onFinish:function() {
-        tween2.play();
+        tween1.play();
       }
     });
 
-    shape.tweens = [tween, tween2, tween3];
+    shape.tweens = [tween, tween1, tween2, tween3];
   }
   
 }

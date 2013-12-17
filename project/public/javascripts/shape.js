@@ -85,20 +85,29 @@ var Shape = function(config) {
     thisShape.objectGroup.destroy();
   }
 
+  this.destroyAnimation = function() {
+    thisShape.animateElement(thisShape.object, 1, Kinetic.Easings.BounceEaseIn, 1, 0);
+    thisShape.animateElement(thisShape.objectBorder, 0.8, Kinetic.Easings.EaseIn, 1, 0);
+    thisShape.animateElement(thisShape.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut, 1, 0);
+    setTimeout(function() {
+      thisShape.destroy();
+    }, 2000);
+  }
+
   this.createAnimation = function() {
-    this.animateElement(this.object, 0.8, Kinetic.Easings.BounceEaseIn);
-    this.animateElement(this.objectBorder, 1, Kinetic.Easings.EaseIn);
-    this.animateElement(this.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut);
+    this.animateElement(this.object, 0.8, Kinetic.Easings.BounceEaseIn, 0, 1);
+    this.animateElement(this.objectBorder, 1, Kinetic.Easings.EaseIn, 0, 1);
+    this.animateElement(this.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut, 0, 1);
     this.createdAt = new Date();
   }
 
-  this.animateElement = function(elem, speed, effect) {
-    elem.setScale(0);
+  this.animateElement = function(elem, speed, effect, start, end) {
+    elem.setScale(start);
     var tween = new Kinetic.Tween({
       node: elem, 
       duration: speed,
-      scaleX: 1,
-      scaleY: 1,
+      scaleX: end,
+      scaleY: end,
       easing: effect
     });
     tween.play();

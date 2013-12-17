@@ -84,7 +84,9 @@ var Square = function(config, shape) {
       node : squareLineLeft,
       points : [-38, 17, -38, -57],
       duration:duration/4,
-      onFinish:shape.destroy
+      onFinish:function() {
+        shape.destroyAnimation();
+      }
     });
 
     var tween3 = new Kinetic.Tween({

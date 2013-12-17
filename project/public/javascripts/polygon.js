@@ -51,35 +51,35 @@ var Polygon = function(config, shape) {
       points : [0, -47, 0, -47],
       stroke:"#000000",
       lineCap:"round",
-      strokeWidth:10
+      strokeWidth:0
     });
     var polygoneLineTwo = new Kinetic.Line({
       points : [40, -23, 40, -23],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
     var polygoneLineThree = new Kinetic.Line({
       points : [40, 23, 40, 23],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
     var polygoneLineFour = new Kinetic.Line({
       points : [0, 47, 0, 47],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
     var polygoneLineFive = new Kinetic.Line({
       points : [-40, 23, -40, 23],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
     var polygoneLineSix = new Kinetic.Line({
       points : [-40, -23, -40, -23],
-      stroke:"#000000",
+      stroke:"transparent",
       lineCap:"round",
       strokeWidth:10
     });
@@ -94,7 +94,9 @@ var Polygon = function(config, shape) {
       node : polygoneLineSix,
       points : [-40, -23, 0, -47],
       duration:duration/6,
-      onFinish:shape.destroy
+      onFinish:function() {
+        shape.destroyAnimation();
+      }
     });
 
     var tween5 = new Kinetic.Tween({
@@ -102,6 +104,7 @@ var Polygon = function(config, shape) {
       points : [-40, 23, -40, -23],
       duration:duration/6,
       onFinish:function() {
+        polygoneLineSix.setStroke("#000000");
         tween6.play();
       }
     });
@@ -111,6 +114,7 @@ var Polygon = function(config, shape) {
       points : [0, 47, -40, 23],
       duration:duration/6,
       onFinish:function() {
+        polygoneLineFive.setStroke("#000000");
         tween5.play();
       }
     });
@@ -120,6 +124,7 @@ var Polygon = function(config, shape) {
       points : [40, 23, 0 , 47],
       duration:duration/6,
       onFinish:function() {
+        polygoneLineFour.setStroke("#000000");
         tween4.play();
       }
     });
@@ -129,19 +134,31 @@ var Polygon = function(config, shape) {
       points : [40, -23, 40, 23],
       duration:duration/6,
       onFinish:function() {
+        polygoneLineThree.setStroke("#000000");
         tween3.play();
+      }
+    });
+
+    var tween1 = new Kinetic.Tween({
+      node : polygoneLineOne,
+      points : [0, -47, 40, -23],
+      duration:duration/6,
+      onFinish:function() {
+        polygoneLineTwo.setStroke("#000000");
+        tween2.play();
       }
     });
 
     var tween = new Kinetic.Tween({
       node : polygoneLineOne,
-      points : [0, -47, 40, -23],
-      duration:duration/6,
+      strokeWidth : 10,
+      duration : 0.5,
       onFinish:function() {
-        tween2.play();
+        tween1.play();
       }
     });
+
     
-    shape.tweens = [tween, tween2, tween3, tween4, tween5, tween6];
+    shape.tweens = [tween, tween1, tween2, tween3, tween4, tween5, tween6];
   }
 }

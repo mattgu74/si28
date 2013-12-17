@@ -67,7 +67,9 @@ var Circle = function(config, shape) {
       node:arc,
       duration:duration,
       pourcent:1.5,
-      onFinish:shape.destroy
+      onFinish:function() {
+        shape.destroyAnimation();
+      }
     });
     
     shape.tweens = [tween];
