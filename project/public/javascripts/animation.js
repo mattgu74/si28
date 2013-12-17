@@ -46,11 +46,17 @@ layer.add(background);
 var newShape = null;
 background.on('mousedown touchstart', function() {
     var mousePos = stage.getMousePosition();
+    var touchPos = stage.getTouchPosition();
+    if(!mousePos.x && !mousePos.y) {
+        pos = touchPos;
+    } else {
+        pos = mousePos;
+    }
     var shapeConfig = {
-      x: mousePos.x,
-      y: mousePos.y,
-      last_x: mousePos.x,
-      last_y: mousePos.y,
+      x: pos.x,
+      y: pos.y,
+      last_x: pos.x,
+      last_y: pos.y,
       color: choose(colors),
       shape: choose(shapes),
       anim: 0
@@ -63,7 +69,7 @@ background.on('mousedown touchstart', function() {
 
 layer.on('mouseup touchend', function() {
     diff = new Date().getTime() - newShape.createdAt.getTime();
-    if(diff < 1000) {
+    if(diff < 500) {
         newShape.destroy();
     }
 });
