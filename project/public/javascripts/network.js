@@ -1,22 +1,26 @@
 var socket = io.connect();
 
+$("#menu").html("<h1>SOUNDBURST</h1><br /><button id=\"playBtn\">Jouer</button>");
+$("#playBtn").click(function() {
+    $("#menu").html("<h1>SOUNDBURST</h1><br /><input type=\"text\" placeholder=\"Nom du joueur\" id=\"playerName\" /><br /><button id=\"playBtn1\">Jouer</button>");
+    $("#playBtn1").click(function() {
+        socket.emit('set nickname', $("#playerName").val());
+        $("#menucontainer").hide();
+    });
+});
+
+
+/*
 socket.emit('set nickname', prompt("Votre nom ?"));
 socket.on('ready', function () {
     //socket.emit('msg', prompt("Votre message ?"));
 });
 
-socket.on('msg', function (data) {
-    console.log(data);
-    alert("Message de " + data.name + ":\n" + data.msg);
-});
-
+*/
 socket.on('obj', function (data) {
     receive_object(data);
 });
 
-function send_msg() {
-    socket.emit('msg', prompt("Votre message ?"));
-}
 
 function send_object(obj, pos) {
     data = {

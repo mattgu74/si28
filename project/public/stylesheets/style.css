@@ -14,3 +14,16 @@ a {
 #container {
   background-color:#000;
 }
+
+#menucontainer {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+#menu {
+    margin: auto;
+    width: 350px;
+    height: 350px;
+    background-color: #FFF;
+}

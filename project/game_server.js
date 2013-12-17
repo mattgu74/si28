@@ -39,14 +39,6 @@ function run(io) {
         console.log('User disconnect ! ');
         clients.splice(clients.indexOf(socket), 1);
       });
-
-      socket.on('msg', function (data) {
-        socket.get('nickname', function (err, name) {
-          console.log('Chat message by ', name);
-          console.log(data);
-          socket.broadcast.emit('msg', {name: name, msg: data});
-        });
-      });
       
       socket.on('obj_right', function (data) {
         socket.get('nickname', function (err, name) {
