@@ -1,8 +1,9 @@
 var socket = io.connect();
 
-$("#menu").html("<h1>SOUNDBURST</h1><br /><button id=\"playBtn\">Jouer</button>");
+$("#menu").html("<h1></h1><br /><button id=\"playBtn\">Jouer</button>");
 $("#playBtn").click(function() {
-    $("#menu").html("<h1>SOUNDBURST</h1><br /><input type=\"text\" placeholder=\"Nom du joueur\" id=\"playerName\" /><br /><button id=\"playBtn1\">Jouer</button>");
+    $("#menu").html("<h1></h1><br /><input type=\"text\" placeholder=\"Nom du joueur\" id=\"playerName\" /><br /><button id=\"playBtn1\">Jouer</button>");
+    $("#menu").addClass("screen2");
     $("#playBtn1").click(function() {
         socket.emit('set nickname', $("#playerName").val());
         $("#menucontainer").hide();
