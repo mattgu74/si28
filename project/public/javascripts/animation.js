@@ -78,40 +78,65 @@ layer.on('mouseup touchend', function() {
   var anim = new Kinetic.Animation(function(frame) {
     for (var i=0;i<layer.children.length;i++) {   
       obj = layer.children[i];
-
-      var dist_x = max(min(obj.getAttr('x') - obj.getAttr('last_x'), 10), -10);
-      var dist_y = max(min(obj.getAttr('y') - obj.getAttr('last_y'), 10), -10);
+    
+      var speed_x = (obj.getAttr('x') - obj.getAttr('last_x')) / frame.timeDiff;
+      var speed_y = (obj.getAttr('y') - obj.getAttr('last_y')) / frame.timeDiff;
       obj.setAttr('last_x', obj.getAttr('x'));
       obj.setAttr('last_y', obj.getAttr('y'));
+
+      
+      if(speed_x > 0.8) { 
+        speed_y = speed_y * 0.8 / speed_x;
+        speed_x = 0.8;
+      }
+      
+      if(speed_y > 0.8) {
+        speed_x = speed_x * 0.8 / speed_y;
+        speed_y = 0.8;
+      }
+      
+      if(speed_x < -0.8) { 
+        speed_y = speed_y * -0.8 / speed_x;
+        speed_x = -0.8;
+      }
+      
+      if(speed_y < -0.8) {
+        speed_x = speed_x * -0.8 / speed_y;
+        speed_y = -0.8;
+      }
+      
+      // Coefficient de frottement
+      speed_x += (speed_x * -0.01);
+      speed_y += (speed_y * -0.01);
       
       if(obj.isDragging()) {
         continue;
       }
       
-      obj.move(dist_x, dist_y);
+      obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff);
 
       if(obj.getAttr('x') > stage.getWidth()) {
         // On traverse l'écran a droite
         obj.setAttr('last_x', obj.getAttr('x') - stage.getWidth());
-        obj.move(dist_x - stage.getWidth(), dist_y);
+        obj.move(speed_x * frame.timeDiff - stage.getWidth(), speed_y * frame.timeDiff);
         send_object(obj, "right");
         i-=1;
       } else if(obj.getAttr('x') < 0) {
         // on traverse l'écran a gauche
         obj.setAttr('last_x', obj.getAttr('x') + stage.getWidth());
-        obj.move(dist_x + stage.getWidth(), dist_y);
+        obj.move(speed_x * frame.timeDiff + stage.getWidth(), speed_y * frame.timeDiff);
         send_object(obj, "left");
         i-=1;
       } else if(obj.getAttr('y') > stage.getHeight()) {
         // on traverse en bas
         obj.setAttr('last_y', obj.getAttr('y') - stage.getHeight());
-        obj.move(dist_x, dist_y - stage.getHeight());
+        obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff - stage.getHeight());
         send_object(obj, "bottom");
         i-=1;
       } else if(obj.getAttr('y') < 0) {
         // on traverse en haut
         obj.setAttr('last_y', obj.getAttr('y') + stage.getHeight());
-        obj.move(dist_x, dist_y + stage.getHeight());
+        obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff + stage.getHeight());
         send_object(obj, "top");
         i-=1;
       }
@@ -120,4 +145,3 @@ layer.on('mouseup touchend', function() {
   }, layer);
 
   anim.start();
-

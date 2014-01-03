@@ -44,7 +44,7 @@ var Shape = function(config) {
     this.seek(config.anim);
     this.objectGroup.status = this.status;
     
-    this.objectGroup.on('dblclick', this.destroy);
+    this.objectGroup.on('dblclick', this.destroyAnimation);
   }
   
   // Obtenir le status des tweens (etat du loadAnimation)
@@ -82,7 +82,20 @@ var Shape = function(config) {
   }
   
   this.destroy = function() {
-    thisShape.objectGroup.destroy();
+    try {
+        try {
+            for (var i=0;i<thisShape.tweens.length;i++) {
+                thisShape.tweens[i].finish();
+                thisShape.tweens[i].destroy();
+            }
+        } catch (f) {
+            
+        }
+        thisShape.objectGroup.destroy();
+    }
+    catch (e) {
+        
+    }
   }
 
   this.destroyAnimation = function() {
@@ -95,22 +108,26 @@ var Shape = function(config) {
   }
 
   this.createAnimation = function() {
-    this.animateElement(this.object, 0.8, Kinetic.Easings.BounceEaseIn, 0, 1);
-    this.animateElement(this.objectBorder, 1, Kinetic.Easings.EaseIn, 0, 1);
-    this.animateElement(this.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut, 0, 1);
+    thisShape.animateElement(thisShape.object, 0.8, Kinetic.Easings.BounceEaseIn, 0, 1);
+    thisShape.animateElement(thisShape.objectBorder, 1, Kinetic.Easings.EaseIn, 0, 1);
+    thisShape.animateElement(thisShape.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut, 0, 1);
     this.createdAt = new Date();
   }
 
   this.animateElement = function(elem, speed, effect, start, end) {
-    elem.setScale(start);
-    var tween = new Kinetic.Tween({
-      node: elem, 
-      duration: speed,
-      scaleX: end,
-      scaleY: end,
-      easing: effect
-    });
-    tween.play();
+    try {
+        elem.setScale(start);
+        var tween = new Kinetic.Tween({
+          node: elem, 
+          duration: speed,
+          scaleX: end,
+          scaleY: end,
+          easing: effect
+        });
+        tween.play();
+     } catch (e) {
+        
+     }
   }
   
   this.startDrag = function() {
