@@ -43,8 +43,8 @@ a {
 #menu h1 {
     width: 500px;
     height:150px;
-    background:url('../images/soundburst.png') no-repeat;
-    background-size:500px auto;
+    background:url('../images/soundburst.png') no-repeat center top;
+    background-size:100% auto;
 }
 
 #menu button {
@@ -76,8 +76,8 @@ a {
 
 #menu input {
     border:1px solid #6BFFD6;
-    width:230px;
-    height:20px;
+    width:250px;
+    height:40px;
     background:#000;
     color:#6BFFD6;
     font-size:20px;
@@ -85,4 +85,38 @@ a {
     font-family: "Helvetica Neue", Helvetica, Arial;
     letter-spacing: 1px;
     margin:10px 0 80px 125px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+
+/* Smartphones */
+@media screen and (max-width: 680px) {
+    #menu {
+        margin: 50px auto;
+        width:100%;
+    }
+    #menu h1 {
+        width:100%;
+        text-align:center;
+        background-size:80% auto;
+    }
+    #menu button {
+        width:70%;
+        margin:10px 15% ;
+    }
+    #menu input {
+        width:70%;
+        margin:35px 15%;
+    }
+    #menu.screen2 {
+        margin : 50px auto;
+    }
+    #menu.screen2 h1{
+        width:100%;
+        background:url('../images/soundburst.png') no-repeat top center;
+        background-size:80% auto;
+        margin:auto;
+        height:80px;
+    }
 }
