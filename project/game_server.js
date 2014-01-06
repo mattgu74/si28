@@ -1,6 +1,18 @@
 function run(io) {
     var clients = new Array();
     var scores = [0,0,0,0,0];
+    
+    function refresh_score() {
+        scores = [0,0,0,0,0];
+        var nextRefresh = new Date();
+        nextRefresh.setMilliseconds(0);
+        nextRefresh.setSeconds(0);
+        nextRefresh.setMinutes(nextRefresh.getMinutes() - (nextRefresh.getMinutes() % 5) + 5);
+        var now = new Date();
+        setTimeout(refresh_score, nextRefresh - now);
+    }
+
+    refresh_score();
 
     function get(clients, socket, dst) {
         index = clients.indexOf(socket) + dst;
