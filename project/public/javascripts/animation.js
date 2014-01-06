@@ -76,8 +76,8 @@ background.on('mousedown touchstart', function() {
     var shapeConfig = {
       x: pos.x,
       y: pos.y,
-      last_x: pos.x,
-      last_y: pos.y,
+      last_x: [pos.x],
+      last_y: [pos.y],
       color: colors[team-1], //choose(colors),
       shape: choose(shapes),
       anim: 0
@@ -110,39 +110,44 @@ layer.on('mouseup touchend', function() {
 
       last_x = obj.getAttr('last_x');
       last_y = obj.getAttr('last_y');
-      obj.setAttr('last_x', obj.getAttr('x'));
-      obj.setAttr('last_y', obj.getAttr('y'));
+      last_x.push(obj.getAttr('x'));
+      last_y.push(obj.getAttr('y'));
+      obj.setAttr('last_x', last_x);
+      obj.setAttr('last_y', last_y);
 
       if(obj.isDragging()) {
         continue;
       }
       
-      var speed_x = (obj.getAttr('x') - last_x) / frame.timeDiff;
-      var speed_y = (obj.getAttr('y') - last_y) / frame.timeDiff;
+      obj.setAttr('last_x', [obj.getAttr('x')]);
+      obj.setAttr('last_y', [obj.getAttr('y')]);
       
-      if(speed_x > 0.8) { 
-        speed_y = speed_y * 0.8 / speed_x;
-        speed_x = 0.8;
+      var speed_x = (obj.getAttr('x') - last_x[max(last_x.length-6,0)]) / (frame.timeDiff * (max(last_x.length-6,0) - last_x.length + 1) * -1);
+      var speed_y = (obj.getAttr('y') - last_y[max(last_y.length-6,0)]) / (frame.timeDiff * (max(last_x.length-6,0) - last_x.length + 1) * -1);
+      
+      if(speed_x > 1.0) { 
+        speed_y = speed_y * 1.0 / speed_x;
+        speed_x = 1.0;
       }
       
-      if(speed_y > 0.8) {
-        speed_x = speed_x * 0.8 / speed_y;
-        speed_y = 0.8;
+      if(speed_y > 1.0) {
+        speed_x = speed_x * 1.0 / speed_y;
+        speed_y = 1.0;
       }
       
-      if(speed_x < -0.8) { 
-        speed_y = speed_y * -0.8 / speed_x;
-        speed_x = -0.8;
+      if(speed_x < -1.0) { 
+        speed_y = speed_y * -1.0 / speed_x;
+        speed_x = -1.0;
       }
       
-      if(speed_y < -0.8) {
-        speed_x = speed_x * -0.8 / speed_y;
-        speed_y = -0.8;
+      if(speed_y < -1.0) {
+        speed_x = speed_x * -1.0 / speed_y;
+        speed_y = -1.0;
       }
       
       // Coefficient de frottement
-      speed_x += (speed_x * -0.01);
-      speed_y += (speed_y * -0.01);
+      speed_x += (speed_x * -0.005);
+      speed_y += (speed_y * -0.005);
       
       obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff);
 
