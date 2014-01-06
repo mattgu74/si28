@@ -65,6 +65,7 @@ function notify_score(type, screens, colorTeam) {
 }
 
 function send_object(obj, pos) {
+    if(obj.getAttr('shapeObj').destroyed) { return; }
     data = {
              'action': 'object', 
              'shape': obj.getAttr('shape'),

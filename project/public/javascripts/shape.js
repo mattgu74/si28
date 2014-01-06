@@ -11,6 +11,8 @@ var Shape = function(config) {
   this.objectOuterBorder = null;
   this.tweens = [];
   
+  this.destroyed = false;
+  
   this.config = $.extend({
     shape: "square",
     countScreen: 0
@@ -99,6 +101,7 @@ var Shape = function(config) {
   }
 
   this.destroyAnimation = function(snd) {
+    if(thisShape.destroyed) { return; }
     if(snd) {
         createjs.Sound.play(snd);
         notify_score(1, thisShape.config.countScreen, thisShape.objectGroup.getAttr('color')); 
@@ -106,6 +109,7 @@ var Shape = function(config) {
         createjs.Sound.play("bad");
         notify_score(2, thisShape.config.countScreen, thisShape.objectGroup.getAttr('color')); 
     }
+    thisShape.destroyed = true;
     thisShape.animateElement(thisShape.object, 1, Kinetic.Easings.BounceEaseIn, 1, 0);
     thisShape.animateElement(thisShape.objectBorder, 0.8, Kinetic.Easings.EaseIn, 1, 0);
     thisShape.animateElement(thisShape.objectOuterBorder, 0.6, Kinetic.Easings.ElasticEaseOut, 1, 0);
