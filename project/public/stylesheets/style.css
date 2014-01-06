@@ -51,33 +51,34 @@ a {
     width: 500px;
     text-align: center;
     color: #6BFFD6;
+    font-weight: normal;
 }
 
 #menu #playBtn1 {
     background:#91CFC9;
-    border:2px solid #1E594D;
-    border-bottom: 2px solid #6BFFD6;
+    border:2px solid #337F78;
+    border-bottom: 2px solid #B3FFF8;
     color:#000;
 }
 
 #menu #playBtn2 {
     background:#E1AFD1;
-    border:2px solid #1E594D;
-    border-bottom: 2px solid #6BFFD6;
+    border:2px solid #7F3D6A;
+    border-bottom: 2px solid #FFC6ED;
     color:#000;
 }
 
 #menu #playBtn3 {
     background:#FFE60A;
-    border:2px solid #1E594D;
-    border-bottom: 2px solid #6BFFD6;
+    border:2px solid #CCB808;
+    border-bottom: 2px solid #FFEE56;
     color:#000;
 }
 
 #menu #playBtn4 {
     background:#F6A348;
-    border:2px solid #1E594D;
-    border-bottom: 2px solid #6BFFD6;
+    border:2px solid #CC873C;
+    border-bottom: 2px solid #FFCD97;
     color:#000;
 }
 
@@ -153,5 +154,15 @@ a {
         background-size:80% auto;
         margin:auto;
         height:80px;
+    }
+    #menu h2 {
+        margin-top:-20px;
+        width:100%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #menu {
+        margin: 100px auto;
     }
 }
