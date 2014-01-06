@@ -98,17 +98,22 @@ layer.on('mouseup touchend', function() {
     scoreB.setText(scores[1]);
     scoreC.setText(scores[2]);
     scoreD.setText(scores[3]);
-    
   
     for (var i=0;i<layer.children.length;i++) {
       obj = layer.children[i];  
       if(!obj.getAttr('last_x')) { continue; } 
-    
-      var speed_x = (obj.getAttr('x') - obj.getAttr('last_x')) / frame.timeDiff;
-      var speed_y = (obj.getAttr('y') - obj.getAttr('last_y')) / frame.timeDiff;
+
+      last_x = obj.getAttr('last_x');
+      last_y = obj.getAttr('last_y');
       obj.setAttr('last_x', obj.getAttr('x'));
       obj.setAttr('last_y', obj.getAttr('y'));
 
+      if(obj.isDragging()) {
+        continue;
+      }
+      
+      var speed_x = (obj.getAttr('x') - last_x) / frame.timeDiff;
+      var speed_y = (obj.getAttr('y') - last_y) / frame.timeDiff;
       
       if(speed_x > 0.8) { 
         speed_y = speed_y * 0.8 / speed_x;
@@ -133,10 +138,6 @@ layer.on('mouseup touchend', function() {
       // Coefficient de frottement
       speed_x += (speed_x * -0.01);
       speed_y += (speed_y * -0.01);
-      
-      if(obj.isDragging()) {
-        continue;
-      }
       
       obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff);
 

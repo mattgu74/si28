@@ -22,6 +22,14 @@ function run(io) {
         clients.splice(clients.indexOf(socket), 1);
       });
       
+      socket.on('pause', function() {
+        clients.splice(clients.indexOf(socket), 1);
+      });
+      
+      socket.on('wakeup', function() {
+        clients.push(socket);
+      });
+      
       socket.on('obj_right', function (data) {
           console.log('Obj_right by ', socket.id);
           get(clients, socket, 1).emit('obj', data);

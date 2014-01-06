@@ -64,6 +64,30 @@ function notify_score(type, screens, colorTeam) {
     socket.emit('score diff', diff_score);
 }
 
+function pause(state) {
+    paused = state;
+    if(state) {
+        socket.emit('pause');
+    } else {
+        socket.emit('wakeup');
+    }
+}
+
+var paused = false;
+
+window.onblur = function (e) {  // Pause if unpaused
+   if (!paused) {
+      pause(true);
+   }
+};
+
+window.onfocus = function (e) {  // unpause if paused
+   if (paused) {
+      pause(false);
+   }
+};
+
+
 function send_object(obj, pos) {
     if(obj.getAttr('shapeObj').destroyed) { return; }
     data = {
