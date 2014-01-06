@@ -12,7 +12,8 @@ var Shape = function(config) {
   this.tweens = [];
   
   this.config = $.extend({
-    shape: "square"
+    shape: "square",
+    countScreen: 0
   }, config);
   
   this.createShape = function() {
@@ -44,7 +45,7 @@ var Shape = function(config) {
     this.seek(config.anim);
     this.objectGroup.status = this.status;
     
-    this.objectGroup.on('dblclick dbltap', function() { thisShape.destroyAnimation("good"); } );
+    this.objectGroup.on('dblclick dbltap', function() { console.log(thisShape.config.countScreen); thisShape.destroyAnimation("good"); } );
   }
   
   // Obtenir le status des tweens (etat du loadAnimation)

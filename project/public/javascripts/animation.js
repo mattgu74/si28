@@ -22,12 +22,25 @@ var stage = new Kinetic.Stage({
 var background = new Kinetic.Rect({
     x: 0, 
     y: 0,
-    // Set lastx and lasty to avoid movement
-    last_x: 0,
-    last_y: 0, 
     width: stage.getWidth(),
     height: stage.getHeight(),
     fill: "black"
+});
+
+var scoreA = new Kinetic.Text({
+  x: 10, y: 10, text: scores[0], fill: colors[0]
+});
+
+var scoreB = new Kinetic.Text({
+  x: 10, y: 25, text: scores[1], fill: colors[1]
+});
+
+var scoreC = new Kinetic.Text({
+  x: 10, y: 40, text: scores[2], fill: colors[2]
+});
+
+var scoreD = new Kinetic.Text({
+  x: 10, y: 55, text: scores[3], fill: colors[3]
 });
 
 window.onresize = function() {
@@ -40,6 +53,10 @@ window.onresize = function() {
 var layer = new Kinetic.Layer();
 stage.add(layer);
 layer.add(background);
+layer.add(scoreA);
+layer.add(scoreB);
+layer.add(scoreC);
+layer.add(scoreD);
 
 
 // Lors d'un appui sur le background on génére un élément
@@ -76,8 +93,16 @@ layer.on('mouseup touchend', function() {
 
 
   var anim = new Kinetic.Animation(function(frame) {
-    for (var i=0;i<layer.children.length;i++) {   
-      obj = layer.children[i];
+    // Update scores
+    scoreA.setText(scores[0]);
+    scoreB.setText(scores[1]);
+    scoreC.setText(scores[2]);
+    scoreD.setText(scores[3]);
+    
+  
+    for (var i=0;i<layer.children.length;i++) {
+      obj = layer.children[i];  
+      if(!obj.getAttr('last_x')) { continue; } 
     
       var speed_x = (obj.getAttr('x') - obj.getAttr('last_x')) / frame.timeDiff;
       var speed_y = (obj.getAttr('y') - obj.getAttr('last_y')) / frame.timeDiff;

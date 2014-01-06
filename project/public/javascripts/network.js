@@ -1,5 +1,6 @@
 var socket = io.connect();
 var team = -1;
+var scores = [0,0,0,0];
 
 $("#menu").html("<h1></h1><br /><button id=\"playBtn\">Jouer</button>");
 $("#playBtn").click(function() {
@@ -37,7 +38,8 @@ function send_object(obj, pos) {
              'y': obj.getAttr('y')/stage.getHeight(), 
              'last_x': obj.getAttr('last_x')/stage.getWidth(), 
              'last_y': obj.getAttr('last_y')/stage.getHeight(),
-             'anim': obj.status()
+             'anim': obj.status(),
+             'countScreen': obj.getAttr('shapeObj').config.countScreen + 1
              };
     socket.emit('obj_'+pos, data);
     obj.getAttr('shapeObj').destroy();
@@ -53,7 +55,8 @@ function receive_object(data) {
           last_x: data['last_x']*stage.getWidth(),
           last_y: data['last_y']*stage.getHeight(),
           shape: data['shape'],
-          anim: data['anim']
+          anim: data['anim'],
+          countScreen: data['countScreen']
         });
       obj.init();
     }
