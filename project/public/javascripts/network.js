@@ -28,6 +28,41 @@ socket.on('obj', function (data) {
     receive_object(data);
 });
 
+socket.on('scores', function (data) {
+    scores = data;
+});
+
+function notify_score(type, screens, colorTeam) {
+    // Type = 1 => Desamorcage
+    // Type = 2 => Explosion
+    // screens = nb d'ecran traversé
+    // colorTeam = Couleur de la team creatrice
+    
+    // L'objet est arrivé ici, mais l'utilisateur n'est pas encore dans le jeu.
+    if (team == -1) {
+        return;
+    }
+
+    var team1 = colors.indexOf(colorTeam); // Team creatrice
+    var team2 = team - 1;
+    
+    var diff_score = [0,0,0,0];
+    
+    if(screens == 0) {
+        diff_score[team2] -= 10;
+    }
+    
+    if(type == 1) { // Destruction
+        diff_score[team1] -= screens;
+        diff_score[team2] += 2*screens; 
+    } else { // Explosion
+        diff_score[team1] += 2*screens;
+        diff_score[team2] -= screens;
+    }
+    
+    
+    socket.emit('score diff', diff_score);
+}
 
 function send_object(obj, pos) {
     data = {

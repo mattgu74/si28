@@ -45,7 +45,7 @@ var Shape = function(config) {
     this.seek(config.anim);
     this.objectGroup.status = this.status;
     
-    this.objectGroup.on('dblclick dbltap', function() { console.log(thisShape.config.countScreen); thisShape.destroyAnimation("good"); } );
+    this.objectGroup.on('dblclick dbltap', function() { thisShape.destroyAnimation("good"); } );
   }
   
   // Obtenir le status des tweens (etat du loadAnimation)
@@ -101,8 +101,10 @@ var Shape = function(config) {
   this.destroyAnimation = function(snd) {
     if(snd) {
         createjs.Sound.play(snd);
+        notify_score(1, thisShape.config.countScreen, thisShape.objectGroup.getAttr('color')); 
     } else {
         createjs.Sound.play("bad");
+        notify_score(2, thisShape.config.countScreen, thisShape.objectGroup.getAttr('color')); 
     }
     thisShape.animateElement(thisShape.object, 1, Kinetic.Easings.BounceEaseIn, 1, 0);
     thisShape.animateElement(thisShape.objectBorder, 0.8, Kinetic.Easings.EaseIn, 1, 0);
