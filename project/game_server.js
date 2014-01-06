@@ -25,10 +25,12 @@ function run(io) {
       
       socket.on('pause', function() {
         clients.splice(clients.indexOf(socket), 1);
+        send_scores(socket);
       });
       
       socket.on('wakeup', function() {
         clients.push(socket);
+        send_scores(socket);
       });
       
       socket.on('obj_right', function (data) {
