@@ -44,7 +44,7 @@ var Shape = function(config) {
     this.seek(config.anim);
     this.objectGroup.status = this.status;
     
-    this.objectGroup.on('dblclick', this.destroyAnimation);
+    this.objectGroup.on('dblclick dbltap', this.destroyAnimation);
   }
   
   // Obtenir le status des tweens (etat du loadAnimation)
