@@ -116,10 +116,10 @@ var Shape = function(config) {
   this.destroyAnimation = function(snd) {
     if(thisShape.destroyed) { return; }
     if(snd) {
-        createjs.Sound.play(snd);
+        createjs.Sound.play(snd+"_"+thisShape.config.shape[0]);
         notify_score(1, thisShape.config.countScreen, thisShape.objectGroup.getAttr('color')); 
     } else {
-        createjs.Sound.play("bad");
+        createjs.Sound.play("bad_"+thisShape.config.shape[0]);
         notify_score(2, thisShape.config.countScreen, thisShape.objectGroup.getAttr('color')); 
     }
     thisShape.destroyed = true;
