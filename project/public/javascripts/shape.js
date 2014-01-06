@@ -98,6 +98,7 @@ var Shape = function(config) {
   }
   
   this.destroy = function() {
+    thisShape.destroyed = true;
     try {
         try {
             for (var i=0;i<thisShape.tweens.length;i++) {
