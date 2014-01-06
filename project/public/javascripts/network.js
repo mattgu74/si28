@@ -35,7 +35,7 @@ function send_object(obj, pos) {
              'anim': obj.status()
              };
     socket.emit('obj_'+pos, data);
-    obj.destroy();
+    obj.getAttr('shapeObj').destroy();
 }
 
 

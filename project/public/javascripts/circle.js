@@ -7,7 +7,7 @@ var Circle = function(config, shape) {
   
   this.createShape = function() {
     shape.objectGroup = new Kinetic.Group({
-      shape: that,
+      shapeObj: shape,
       x: that.config.x,
       y: that.config.y,
       last_x: that.config.last_x,
