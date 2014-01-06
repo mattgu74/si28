@@ -57,7 +57,7 @@ background.on('mousedown touchstart', function() {
       y: pos.y,
       last_x: pos.x,
       last_y: pos.y,
-      color: choose(colors),
+      color: colors[team-1], //choose(colors),
       shape: choose(shapes),
       anim: 0
     }

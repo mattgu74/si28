@@ -42,9 +42,43 @@ a {
 
 #menu h1 {
     width: 500px;
-    height:150px;
+    height:100px;
     background:url('../images/soundburst.png') no-repeat center top;
     background-size:100% auto;
+}
+
+#menu h2 {
+    width: 500px;
+    text-align: center;
+    color: #6BFFD6;
+}
+
+#menu #playBtn1 {
+    background:#91CFC9;
+    border:2px solid #1E594D;
+    border-bottom: 2px solid #6BFFD6;
+    color:#000;
+}
+
+#menu #playBtn2 {
+    background:#E1AFD1;
+    border:2px solid #1E594D;
+    border-bottom: 2px solid #6BFFD6;
+    color:#000;
+}
+
+#menu #playBtn3 {
+    background:#FFE60A;
+    border:2px solid #1E594D;
+    border-bottom: 2px solid #6BFFD6;
+    color:#000;
+}
+
+#menu #playBtn4 {
+    background:#F6A348;
+    border:2px solid #1E594D;
+    border-bottom: 2px solid #6BFFD6;
+    color:#000;
 }
 
 #menu button {
@@ -61,6 +95,7 @@ a {
     margin-left:125px;
     font-family: "Helvetica Neue", Helvetica, Arial;
     letter-spacing: 1px;
+    margin-bottom: 10px;
 }
 
 #menu.screen2 {
@@ -68,7 +103,7 @@ a {
 }
 #menu.screen2 h1{
     width: 300px;
-    height:150px;
+    height:100px;
     background:url('../images/soundburst.png') no-repeat;
     background-size:300px auto;
     margin:auto;

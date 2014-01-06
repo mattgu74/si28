@@ -1,23 +1,28 @@
 var socket = io.connect();
+var team = -1;
 
 $("#menu").html("<h1></h1><br /><button id=\"playBtn\">Jouer</button>");
 $("#playBtn").click(function() {
-    $("#menu").html("<h1></h1><br /><input type=\"text\" placeholder=\"Nom du joueur\" id=\"playerName\" /><br /><button id=\"playBtn1\">Jouer</button>");
+    $("#menu").html("<h1></h1><br /><h2>Choisissez votre équipe</h2><br /><button id=\"playBtn1\">Jouer</button><button id=\"playBtn2\">Jouer</button><button id=\"playBtn3\">Jouer</button><button id=\"playBtn4\">Jouer</button>");
     $("#menu").addClass("screen2");
     $("#playBtn1").click(function() {
-        socket.emit('set nickname', $("#playerName").val());
+        team = 1;
         $("#menucontainer").hide();
-    });
+        });
+    $("#playBtn2").click(function() {
+        team = 2;
+        $("#menucontainer").hide();
+        });
+    $("#playBtn3").click(function() {
+        team = 3;
+        $("#menucontainer").hide();
+        });
+    $("#playBtn4").click(function() {
+        team = 4;
+        $("#menucontainer").hide();
+        });
 });
 
-
-/*
-socket.emit('set nickname', prompt("Votre nom ?"));
-socket.on('ready', function () {
-    //socket.emit('msg', prompt("Votre message ?"));
-});
-
-*/
 socket.on('obj', function (data) {
     receive_object(data);
 });
