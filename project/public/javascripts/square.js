@@ -7,17 +7,6 @@ var Square = function(config, shape) {
   }, config);
 
   this.createShape = function() {
-    shape.objectGroup = new Kinetic.Group({
-      shapeObj: shape,
-      x: that.config.x,
-      y: that.config.y,
-      last_x: that.config.last_x,
-      last_y: that.config.last_y,
-      color: that.config.color,
-      shape: that.config.shape,
-      draggable: true
-    });
-
     shape.object = new Kinetic.RegularPolygon({
       x: -1*(that.config.size + 2)/2,
       y: -1*(that.config.size + 2)/2,

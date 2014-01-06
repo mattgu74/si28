@@ -78,6 +78,8 @@ background.on('mousedown touchstart', function() {
       y: pos.y,
       last_x: [pos.x],
       last_y: [pos.y],
+      speed_x: 0,
+      speed_y: 0,
       color: colors[team-1], //choose(colors),
       shape: choose(shapes),
       anim: 0
@@ -122,8 +124,13 @@ layer.on('mouseup touchend', function() {
       obj.setAttr('last_x', [obj.getAttr('x')]);
       obj.setAttr('last_y', [obj.getAttr('y')]);
       
-      var speed_x = (obj.getAttr('x') - last_x[max(last_x.length-6,0)]) / (frame.timeDiff * (max(last_x.length-6,0) - last_x.length + 1) * -1);
-      var speed_y = (obj.getAttr('y') - last_y[max(last_y.length-6,0)]) / (frame.timeDiff * (max(last_x.length-6,0) - last_x.length + 1) * -1);
+      if(last_x.length > 2) {
+          var speed_x = (obj.getAttr('x') - last_x[max(last_x.length-6,0)]) / (frame.timeDiff * (max(last_x.length-6,0) - last_x.length + 1) * -1);
+          var speed_y = (obj.getAttr('y') - last_y[max(last_y.length-6,0)]) / (frame.timeDiff * (max(last_x.length-6,0) - last_x.length + 1) * -1);
+      } else {
+          var speed_x = obj.getAttr('speed_x');
+          var speed_y = obj.getAttr('speed_y');
+      }
       
       if(speed_x > 1.0) { 
         speed_y = speed_y * 1.0 / speed_x;
@@ -149,29 +156,31 @@ layer.on('mouseup touchend', function() {
       speed_x += (speed_x * -0.005);
       speed_y += (speed_y * -0.005);
       
+      obj.setAttr('speed_x', speed_x);
+      obj.setAttr('speed_y', speed_y);
+      
       obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff);
+
+      last_x = obj.getAttr('last_x');
+      last_y = obj.getAttr('last_y');
 
       if(obj.getAttr('x') > stage.getWidth()) {
         // On traverse l'écran a droite
-        obj.setAttr('last_x', obj.getAttr('x') - stage.getWidth());
         obj.move(speed_x * frame.timeDiff - stage.getWidth(), speed_y * frame.timeDiff);
         send_object(obj, "right");
         i-=1;
       } else if(obj.getAttr('x') < 0) {
         // on traverse l'écran a gauche
-        obj.setAttr('last_x', obj.getAttr('x') + stage.getWidth());
         obj.move(speed_x * frame.timeDiff + stage.getWidth(), speed_y * frame.timeDiff);
         send_object(obj, "left");
         i-=1;
       } else if(obj.getAttr('y') > stage.getHeight()) {
         // on traverse en bas
-        obj.setAttr('last_y', obj.getAttr('y') - stage.getHeight());
         obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff - stage.getHeight());
         send_object(obj, "bottom");
         i-=1;
       } else if(obj.getAttr('y') < 0) {
         // on traverse en haut
-        obj.setAttr('last_y', obj.getAttr('y') + stage.getHeight());
         obj.move(speed_x * frame.timeDiff, speed_y * frame.timeDiff + stage.getHeight());
         send_object(obj, "top");
         i-=1;

@@ -96,8 +96,8 @@ function send_object(obj, pos) {
              'color': obj.getAttr('color'), 
              'x': obj.getAttr('x')/stage.getWidth(), 
              'y': obj.getAttr('y')/stage.getHeight(), 
-             'last_x': obj.getAttr('last_x')[obj.getAttr('last_x').length-1]/stage.getWidth(), 
-             'last_y': obj.getAttr('last_y')[obj.getAttr('last_x').length-1]/stage.getHeight(),
+             'speed_x': obj.getAttr('speed_x'), 
+             'speed_y': obj.getAttr('speed_y'),
              'anim': obj.status(),
              'countScreen': obj.getAttr('shapeObj').config.countScreen + 1
              };
@@ -112,8 +112,10 @@ function receive_object(data) {
           x: data['x']*stage.getWidth(),
           y: data['y']*stage.getHeight(),
           color: data['color'],
-          last_x: [data['last_x']*stage.getWidth()],
-          last_y: [data['last_y']*stage.getHeight()],
+          speed_x: data['speed_x'],
+          speed_y: data['speed_y'],
+          last_x: [data['x']*stage.getWidth()],
+          last_y: [data['y']*stage.getHeight()],
           shape: data['shape'],
           anim: data['anim'],
           countScreen: data['countScreen']

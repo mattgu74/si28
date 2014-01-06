@@ -6,17 +6,6 @@ var Polygon = function(config, shape) {
   }, config);
 
   this.createShape = function() {
-    shape.objectGroup = new Kinetic.Group({
-      shapeObj: shape,
-      x: that.config.x,
-      y: that.config.y,
-      last_x: that.config.last_x,
-      last_y: that.config.last_y,
-      color: that.config.color,
-      shape: "polygon",
-      draggable: true
-    });
-
     shape.object = new Kinetic.RegularPolygon({
       x: 0,
       y: 0,

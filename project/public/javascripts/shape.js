@@ -19,6 +19,19 @@ var Shape = function(config) {
   }, config);
   
   this.createShape = function() {
+    this.objectGroup = new Kinetic.Group({
+      shapeObj: thisShape,
+      x: thisShape.config.x,
+      y: thisShape.config.y,
+      last_x: thisShape.config.last_x,
+      last_y: thisShape.config.last_y,
+      speed_x: thisShape.config.speed_x,
+      speed_y: thisShape.config.speed_y,
+      color: thisShape.config.color,
+      shape: thisShape.config.shape,
+      draggable: true
+    });
+  
     switch(this.config.shape) {
         case "square":
             obj = new Square(config, this);
