@@ -1,6 +1,6 @@
 function run(io) {
     var clients = new Array();
-    var scores = [0,0,0,0];
+    var scores = [0,0,0,0,0];
 
     function get(clients, socket, dst) {
         index = clients.indexOf(socket) + dst;
@@ -9,6 +9,7 @@ function run(io) {
     }
     
     function send_scores(socket) {
+        scores[4] = clients.length;
         socket.emit('scores', scores);
         socket.broadcast.emit('scores', scores);
     }

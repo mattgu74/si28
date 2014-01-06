@@ -1,6 +1,6 @@
 var socket = io.connect();
 var team = -1;
-var scores = [0,0,0,0];
+var scores = [0,0,0,0,0];
 
 $("#menu").html("<h1></h1><br /><button id=\"playBtn\">Jouer</button>");
 $("#playBtn").click(function() {

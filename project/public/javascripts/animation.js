@@ -28,19 +28,23 @@ var background = new Kinetic.Rect({
 });
 
 var scoreA = new Kinetic.Text({
-  x: 10, y: 10, text: scores[0], fill: colors[0]
+  x: 10, y: 25, text: scores[0], fill: colors[0]
 });
 
 var scoreB = new Kinetic.Text({
-  x: 10, y: 25, text: scores[1], fill: colors[1]
+  x: 10, y: 40, text: scores[1], fill: colors[1]
 });
 
 var scoreC = new Kinetic.Text({
-  x: 10, y: 40, text: scores[2], fill: colors[2]
+  x: 10, y: 55, text: scores[2], fill: colors[2]
 });
 
 var scoreD = new Kinetic.Text({
-  x: 10, y: 55, text: scores[3], fill: colors[3]
+  x: 10, y: 70, text: scores[3], fill: colors[3]
+});
+
+var players = new Kinetic.Text({
+  x: 10, y: 10, text: "Joueurs actifs : " + scores[4], fill: colors[0]
 });
 
 window.onresize = function() {
@@ -57,7 +61,7 @@ layer.add(scoreA);
 layer.add(scoreB);
 layer.add(scoreC);
 layer.add(scoreD);
-
+layer.add(players);
 
 // Lors d'un appui sur le background on génére un élément
 var newShape = null;
@@ -98,6 +102,7 @@ layer.on('mouseup touchend', function() {
     scoreB.setText(scores[1]);
     scoreC.setText(scores[2]);
     scoreD.setText(scores[3]);
+    players.setText("Joueurs actifs : " + scores[4]);
   
     for (var i=0;i<layer.children.length;i++) {
       obj = layer.children[i];  
