@@ -14,10 +14,11 @@ function run(io) {
 
     refresh_score();
 
-    function get(clients, socket, dst) {
+    function send(clients, socket, dst, data) {
         index = clients.indexOf(socket) + dst;
         index = (index + clients.length) % clients.length;
-        return clients[index];
+        c = clients[index];
+        if(c) { c.emit('obj', data); }
     }
     
     function send_scores(socket) {
@@ -47,22 +48,22 @@ function run(io) {
       
       socket.on('obj_right', function (data) {
           console.log('Obj_right by ', socket.id);
-          get(clients, socket, 1).emit('obj', data);
+          send(clients, socket, 1, data);
       });
       
       socket.on('obj_left', function (data) {
           console.log('Obj_left by ', socket.id);
-          get(clients, socket, -1).emit('obj', data);
+          send(clients, socket, -1, data);
       });
       
       socket.on('obj_top', function (data) {
           console.log('Obj_top by ', socket.id);
-          get(clients, socket, 2).emit('obj', data);
+          send(clients, socket, 2, data);
       });
       
       socket.on('obj_bottom', function (data) {
           console.log('Obj_bottom by ', socket.id);
-          get(clients, socket, -2).emit('obj', data);
+          send(clients, socket, -2, data);
       });
       
       socket.on('score diff', function (data) {
