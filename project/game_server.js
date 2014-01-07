@@ -67,11 +67,13 @@ function run(io) {
       });
       
       socket.on('score diff', function (data) {
-          scores[0] += data[0];
-          scores[1] += data[1];
-          scores[2] += data[2];
-          scores[3] += data[3];
-          send_scores(socket);
+          if(data.length == 4) {
+            scores[0] += parseInt(data[0]);
+            scores[1] += parseInt(data[1]);
+            scores[2] += parseInt(data[2]);
+            scores[3] += parseInt(data[3]);
+            send_scores(socket);
+          }
       });
       
     });

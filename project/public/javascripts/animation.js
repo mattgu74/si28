@@ -132,29 +132,29 @@ layer.on('mouseup touchend', function() {
           var speed_y = obj.getAttr('speed_y');
       }
       
-      if(speed_x > 1.0) { 
-        speed_y = speed_y * 1.0 / speed_x;
-        speed_x = 1.0;
+      if(speed_x > 0.8) { 
+        speed_y = speed_y * 0.8 / speed_x;
+        speed_x = 0.8;
       }
       
-      if(speed_y > 1.0) {
-        speed_x = speed_x * 1.0 / speed_y;
-        speed_y = 1.0;
+      if(speed_y > 0.8) {
+        speed_x = speed_x * 0.8 / speed_y;
+        speed_y = 0.8;
       }
       
-      if(speed_x < -1.0) { 
-        speed_y = speed_y * -1.0 / speed_x;
-        speed_x = -1.0;
+      if(speed_x < -0.8) { 
+        speed_y = speed_y * -0.8 / speed_x;
+        speed_x = -0.8;
       }
       
-      if(speed_y < -1.0) {
-        speed_x = speed_x * -1.0 / speed_y;
-        speed_y = -1.0;
+      if(speed_y < -0.8) {
+        speed_x = speed_x * -0.8 / speed_y;
+        speed_y = -0.8;
       }
       
       // Coefficient de frottement
-      speed_x += (speed_x * -0.005);
-      speed_y += (speed_y * -0.005);
+      speed_x += (speed_x * -0.01);
+      speed_y += (speed_y * -0.01);
       
       obj.setAttr('speed_x', speed_x);
       obj.setAttr('speed_y', speed_y);
